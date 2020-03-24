@@ -2,7 +2,7 @@ import React, { useState, Fragment } from 'react'
 import { createBrowserHistory } from 'history'
 import { Link } from 'react-router-dom'
 export const history = createBrowserHistory()
-import './styles.css';
+
 
 const NavActions = ({path}) => {
 
@@ -48,10 +48,10 @@ const NavActions = ({path}) => {
                 <ul>
                     
                     <Link to={`${path}/users/holi`}>
-                        <li > <h1>users</h1> </li>
+                        <li > <h2>users</h2> </li>
                     </Link>
                     <Link to={`${path}/stadistics`}>
-                        <li> <h1>stadistics</h1> </li>
+                        <li> <h2>stadistics</h2> </li>
                     </Link>
                 </ul>
             </nav>

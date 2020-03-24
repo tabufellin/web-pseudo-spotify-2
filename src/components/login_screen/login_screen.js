@@ -39,7 +39,7 @@ const LoginScreen = ({ onSubmit }) => {
 
     return (
 
-      <Fragment>
+      <div className="form">
         <h1>Log In</h1>
 
         <div class="input-group mb-3">
@@ -57,7 +57,7 @@ const LoginScreen = ({ onSubmit }) => {
                <span class="input-group-text" id="basic-addon1">*</span>
               </div>
             <input 
-              type="text" class="form-control" placeholder="password" 
+              type="password" class="form-control" placeholder="password" 
               aria-label="password" aria-describedby="basic-addon1" 
               value={password} onChange={e => changePassword(e.target.value)}/>
         </div>
@@ -74,7 +74,7 @@ const LoginScreen = ({ onSubmit }) => {
             Sign up
           </button>
         </Link>
-      </Fragment>
+      </div>
       
     );
   } 

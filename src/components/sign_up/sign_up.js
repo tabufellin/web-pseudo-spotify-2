@@ -1,6 +1,8 @@
 import React, { useState, Fragment } from 'react'
 import { createBrowserHistory } from 'history'
 import { Link } from 'react-router-dom'
+import {styles} from './styles.css'
+
 export const history = createBrowserHistory()
 const SignUp = ({ onSubmit }) => {
     const [userName, changeUserName] = useState('');
@@ -34,7 +36,7 @@ const SignUp = ({ onSubmit }) => {
 
     return (
 
-      <Fragment>
+      <div className="form">
         <h1>Sign Up</h1>
         <p>¡Estas a punto de crear tu cuenta!</p>
         <input
@@ -44,7 +46,7 @@ const SignUp = ({ onSubmit }) => {
           onChange={e => changeUserName(e.target.value)}
         />
         <input
-          type="text"
+          type="password"
           placeholder="password"
           value={password}
           onChange={e => changePassword(e.target.value)}
@@ -54,7 +56,7 @@ const SignUp = ({ onSubmit }) => {
             Submit
           </button>
         </Link>
-      </Fragment>
+      </div>
       
     );
   } 
