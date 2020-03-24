@@ -1,6 +1,7 @@
 import React, { useState, Fragment } from 'react'
 import { createBrowserHistory } from 'history'
 import { Link } from 'react-router-dom'
+import 'bootstrap/dist/css/bootstrap.css';
 export const history = createBrowserHistory()
 const LoginScreen = ({ onSubmit }) => {
     const [userName, changeUserName] = useState('');
@@ -40,26 +41,36 @@ const LoginScreen = ({ onSubmit }) => {
 
       <Fragment>
         <h1>Log In</h1>
-        <input
-          type="text"
-          placeholder="userName"
-          value={userName}
-          onChange={e => changeUserName(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="password"
-          value={password}
-          onChange={e => changePassword(e.target.value)}
-        />
+
+        <div class="input-group mb-3">
+              <div class="input-group-prepend">
+               <span class="input-group-text" id="basic-addon1">@</span>
+              </div>
+            <input 
+              type="text" class="form-control" placeholder="Username" 
+              aria-label="Username" aria-describedby="basic-addon1" 
+              value={userName} onChange={e => changeUserName(e.target.value)}/>
+        </div>
+
+        <div class="input-group mb-3">
+              <div class="input-group-prepend">
+               <span class="input-group-text" id="basic-addon1">*</span>
+              </div>
+            <input 
+              type="text" class="form-control" placeholder="password" 
+              aria-label="password" aria-describedby="basic-addon1" 
+              value={password} onChange={e => changePassword(e.target.value)}/>
+        </div>
+
         <Link to={`/user/${userName}`}>
-          <button type="submit" onClick={onPressLogin}>
+          <button type="submit" class='btn btn-primary' onClick={onPressLogin}>
             Submit
           </button>
-        </Link>{' '}
+        </Link>
+
         <p>¿No tienes una cuenta?</p>
         <Link to={{pathname: '/sign-up'} }>
-          <button type="submit" onClick={onPressSignUp}>
+          <button type="submit" class='btn btn-primary ' onClick={onPressSignUp}>
             Sign up
           </button>
         </Link>

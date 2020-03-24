@@ -1,5 +1,6 @@
-import React, { useState, Fragment } from 'react'
+import React, {  Fragment } from 'react'
 import { createBrowserHistory } from 'history'
+import NavActions from '../NavActions/nav_actions'
 export const history = createBrowserHistory()
 const User = () => {
 
@@ -7,7 +8,7 @@ const User = () => {
 
       <Fragment>
 
-        <h1>User system</h1>
+        <NavActions></NavActions>
 
       </Fragment>
       

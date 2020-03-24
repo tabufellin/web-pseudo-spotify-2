@@ -12,7 +12,7 @@ const SignUp = ({ onSubmit }) => {
 
       if (userName !== '' || password !== '' || userName !== 'admin' || password !== 'password') {
 
-        history.push('/')
+        history.goBack()
         //TODO TO VALIDATE THE USERuserName AND PASSWORD 
         //IN DB
           
@@ -36,9 +36,10 @@ const SignUp = ({ onSubmit }) => {
 
       <Fragment>
         <h1>Sign Up</h1>
+        <p>¡Estas a punto de crear tu cuenta!</p>
         <input
           type="text"
-          placeholder="userName"
+          placeholder="username"
           value={userName}
           onChange={e => changeUserName(e.target.value)}
         />

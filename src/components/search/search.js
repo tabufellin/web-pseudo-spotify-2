@@ -1,21 +1,33 @@
-import React, { Fragment } from 'react'
+import React, {  Fragment } from 'react'
 import { createBrowserHistory } from 'history'
-import NavAAS from '../NavAAS/navass'
 export const history = createBrowserHistory()
+const Search = ({searching}) => {
 
-const Search = ({path}) => {
-    const actualPath = path
-    console.log(actualPath)
+   /* const dataBasetoLook = "none"
+
+    if (searching === 'song') {
+        dataBasetoLook = 'song'
+    }
+
+    if (searching === 'album') {
+        dataBasetoLook = 'album'
+    }
+
+    if (searching === 'artist' ) {
+        dataBasetoLook = 'artist'
+    }
+*/
 
     return (
 
       <Fragment>
-          <NavAAS path={actualPath}></NavAAS>
+          <h1> search for  {searching}</h1>
+
+
 
       </Fragment>
       
     );
-  } 
-
+ } 
 
 export default Search

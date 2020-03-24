@@ -1,9 +1,5 @@
-import React, { useState, Fragment } from 'react'
-import { createBrowserHistory } from 'history'
+import React, {  Fragment } from 'react'
 import NavActions from '../NavActions/nav_actions'
-
-
-export const history = createBrowserHistory()
 
 
 const Admin = () => {
