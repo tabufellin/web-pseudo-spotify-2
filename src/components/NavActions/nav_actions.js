@@ -55,8 +55,6 @@ const NavActions = ({path}) => {
                     </Link>
                 </ul>
             </nav>
-
-
       </div>
       
     );
