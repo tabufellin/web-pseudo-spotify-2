@@ -1,7 +1,9 @@
 import React, { useState, Fragment } from 'react'
 import { createBrowserHistory } from 'history'
 import { Link } from 'react-router-dom'
+import './styles.css'
 export const history = createBrowserHistory()
+
 
 const AddAlbum = ({ onSubmit }) => {
     const [title, changeTitle] = useState('');
@@ -33,7 +35,7 @@ const AddAlbum = ({ onSubmit }) => {
 
     return (
 
-      <Fragment>
+      <div>
         <h1>Ingreso de nuevo Album</h1>
 
         <input
@@ -51,12 +53,12 @@ const AddAlbum = ({ onSubmit }) => {
         />
 
 
-        <button type="submit" class='btn btn-primary' onClick={onPress}>
+        <button type="submit" className='btn btn-primary' onClick={onPress}>
         add
         </button>
 
 
-      </Fragment>
+      </div>
       
     );
 

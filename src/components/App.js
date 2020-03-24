@@ -20,7 +20,9 @@ const App = () => (
 
         <Route exact path="/" component={LoginScreen}/>
         <Route exact path="/user/admin" component={Admin} />
-        <Route exact path="/user/:username" component={User}/>
+        <Route exact path="/user/:username">
+          <User></User>
+        </Route>
         <Route exact path="/sign-up" component={SignUp} />
 
       
@@ -34,10 +36,26 @@ const App = () => (
           <Search searching='artist'></Search>
         </Route>
 
+        <Route exact path="/user/:username/search/song">
+          <Search searching='song'></Search>
+        </Route>
+        <Route exact path="/user/:username/search/album">
+          <Search searching='album'></Search>
+        </Route>
+        <Route exact path="/user/:username/search/artist">
+          <Search searching='artist'></Search>
+        </Route>
+
+
+
+
         <Route exact path='/user/admin/add/song' component={AddSong}/>
         <Route exact path='/user/admin/add/album' component={AddAlbum}/>
         <Route exact path='/user/admin/add/artist' component={AddArtist}/>
         
+        <Route exact path='/user/:username/add/song' component={AddSong}/>
+        <Route exact path='/user/:username/add/album' component={AddAlbum}/>
+        <Route exact path='/user/:username/add/artist' component={AddArtist}/>       
         
       </Switch>
 

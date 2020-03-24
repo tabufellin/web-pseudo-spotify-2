@@ -1,6 +1,7 @@
 import React, { useState, Fragment } from 'react'
 import { createBrowserHistory } from 'history'
 import { Link } from 'react-router-dom'
+import './styles.css' 
 export const history = createBrowserHistory()
 const AddArtist = ({ onSubmit }) => {
     const [userName, changeUserName] = useState('');
@@ -44,7 +45,7 @@ const AddArtist = ({ onSubmit }) => {
           onChange={e => changeUserName(e.target.value)}
         />
 
-        <button type="submit" class='btn btn-primary' onClick={onPress}>
+        <button type="submit" className='btn btn-primary' onClick={onPress}>
         add
         </button>
 
