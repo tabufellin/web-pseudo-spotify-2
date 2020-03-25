@@ -25,6 +25,73 @@ app.listen(app.get('port'));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+console.log("Todo listo")
+
+app.post('/signup', (req, res) => {
+	// console.log(req.body.userName)
+	const { Client } = require('pg')
+	const connectionData = {
+	  user: 'postgres',
+	  host: '127.0.0.1',
+	  database: 'Project1db',
+	  password: 'ohdude9912',
+	  port: 5432,
+	}
+	const client = new Client(connectionData)
+
+	client.connect()
+	client.query('SELECT * FROM artist')
+	    .then(response => {
+	        res.json(response.rows)
+	        client.end()
+	    })
+	    .catch(err => {
+	        client.end()
+	    })
+});
+
+app.get('/artist', (req, res) => {
+	const { Client } = require('pg')
+	const connectionData = {
+	  user: 'postgres',
+	  host: '127.0.0.1',
+	  database: 'Project1db',
+	  password: 'ohdude9912',
+	  port: 5432,
+	}
+	const client = new Client(connectionData)
+
+	client.connect()
+	client.query('SELECT * FROM artist')
+	    .then(response => {
+	        res.json(response.rows)
+	        client.end()
+	    })
+	    .catch(err => {
+	        client.end()
+	    })
+});
+app.get('/album', (req, res) => {
+	const { Client } = require('pg')
+	const connectionData = {
+	  user: 'postgres',
+	  host: '127.0.0.1',
+	  database: 'Project1db',
+	  password: 'ohdude9912',
+	  port: 5432,
+	}
+	const client = new Client(connectionData)
+
+	client.connect()
+	client.query('SELECT * FROM album')
+	    .then(response => {
+	        res.json(response.rows)
+	        client.end()
+	    })
+	    .catch(err => {
+	        client.end()
+	    })
+});
 app.get('/songs', (req, res) => {
 	const { Client } = require('pg')
 	const connectionData = {
@@ -37,7 +104,7 @@ app.get('/songs', (req, res) => {
 	const client = new Client(connectionData)
 
 	client.connect()
-	client.query('SELECT name FROM artist')
+	client.query('SELECT * FROM track')
 	    .then(response => {
 	        res.json(response.rows)
 	        client.end()
@@ -64,8 +131,6 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-
-
 // db.one('SELECT $1 AS value', 123)
 //   .then(function (data) {
 //     console.log('DATA:', data.value)
@@ -73,7 +138,5 @@ app.use(function(err, req, res, next) {
 //   .catch(function (error) {
 //     console.log('ERROR:', error)
 //   })
-
-
 
 module.exports = app;
