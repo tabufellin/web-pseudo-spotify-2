@@ -8,6 +8,8 @@ import Search from '../components/search/search'
 import AddArtist from '../components/add_artist/add_artist'
 import AddAlbum from './add_album/AddAlbum'
 import AddSong from './add_song/add_song'
+import Stadistics from './stadistics';
+import Query1 from './query1/query1';
 // We give each route either a target `component`, or we can send functions in `render` or `children` 
 // that return valid nodes. `children` always returns the given node whether there is a match or not.
 const App = () => (
@@ -42,16 +44,17 @@ const App = () => (
           <Search searching='artist'></Search>
         </Route>
 
-
-
-
         <Route exact path='/user/admin/add/song' component={AddSong}/>
         <Route exact path='/user/admin/add/album' component={AddAlbum}/>
         <Route exact path='/user/admin/add/artist' component={AddArtist}/>
         
         <Route exact path='/user/:username/add/song' component={AddSong}/>
         <Route exact path='/user/:username/add/album' component={AddAlbum}/>
-        <Route exact path='/user/:username/add/artist' component={AddArtist}/>       
+        <Route exact path='/user/:username/add/artist' component={AddArtist}/>  
+
+        <Route exact path='/user/:username/stadistics' component={Stadistics} />   
+
+        <Route exact path='/1' component={Query1} /> 
         
       </Switch>
 

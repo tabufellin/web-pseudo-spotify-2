@@ -39,16 +39,6 @@ app.listen(app.get('port'));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-<<<<<<< HEAD
-
-const connectionData = {
-	user: 'postgres',
-	host: '127.0.0.1',
-	database: 'Project1db',
-	password: 'hola mundo',
-	port: 5432,
-  }
-=======
 console.log("Todo listo")
 
 app.post('/signup', (req, res) => {
@@ -116,9 +106,38 @@ app.get('/album', (req, res) => {
 	        client.end()
 	    })
 });
->>>>>>> 3a1c5fed13479f1a9cabae1adce9057941d72c95
-app.get('/songs', (req, res) => {
+app.get('/stadistics-artist-album', (req, res) => {
 	const { Client } = require('pg')
+	const connectionData = {
+	  user: 'postgres',
+	  host: '127.0.0.1',
+	  database: 'Project1db',
+	  password: 'hola mundo',
+	  port: 5432,
+	}
+	const client = new Client(connectionData)
+
+	client.connect()
+	client.query('Select count(*) as cantAlbum, artist.name FROM artist INNER JOIN album ON artist.artistid = album.artistid GROUP BY album.artistid, artist.name ORDER BY cantAlbum DESC LIMIT 5;')
+	    .then(response => {
+	        res.json(response.rows)
+	        client.end()
+	    })
+	    .catch(err => {
+	        client.end()
+	    })
+});
+
+app.get('/stadistics', (req, res) => {
+	const { Client } = require('pg')
+
+	const connectionData = {
+	  user: 'postgres',
+	  host: '127.0.0.1',
+	  database: 'Project1db',
+	  password: 'hola mundo',
+	  port: 5432,
+	}
 
 	const client = new Client(connectionData)
 
