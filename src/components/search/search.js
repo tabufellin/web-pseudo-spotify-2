@@ -3,28 +3,41 @@ import { createBrowserHistory } from 'history'
 export const history = createBrowserHistory()
 const Search = ({searching}) => {
 
-   /* const dataBasetoLook = "none"
+   /* const dataBasetoLook = "none"*/
 
-    if (searching === 'song') {
-        dataBasetoLook = 'song'
-    }
-
-    if (searching === 'album') {
-        dataBasetoLook = 'album'
-    }
-
-    if (searching === 'artist' ) {
-        dataBasetoLook = 'artist'
-    }
-*/
     const onClick = () => {
-        fetch('http://localhost:3001/songs')
-        .then(function(response) {
-            return (response.json());
-        })
-        .then(function(data) {
-            console.log(data);
-        })
+        if (searching === 'song') {
+            fetch('http://localhost:3001/songs')
+            .then(function(response) {
+                return (response.json());
+            })
+            .then(function(data) {
+                console.log(data);
+            })
+        }
+
+        if (searching === 'album') {
+            fetch('http://localhost:3001/album')
+            .then(function(response) {
+                return (response.json());
+            })
+            .then(function(data) {
+                console.log(data);
+            })
+        }
+
+        if (searching === 'artist' ) {
+            fetch('http://localhost:3001/artist')
+            .then(function(response) {
+                return (response.json());
+            })
+            .then(function(data) {
+                console.log(data);
+            })
+        }
+
+
+        
     }
 
     return (

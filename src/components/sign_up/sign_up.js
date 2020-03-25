@@ -9,6 +9,26 @@ const SignUp = ({ onSubmit }) => {
     const [password, changePassword] = useState('');
 
     const onPress = () => {
+      var data = {
+        userName: userName,
+        password: password
+      };
+      
+      fetch('https://localhost:3001/signup', {
+        method: 'POST', // or 'PUT'
+        body: JSON.stringify(data), // data can be `string` or {object}!
+        headers:{
+          'Content-Type': 'application/json'
+        }
+      }).then(res => res.json())
+      .catch(error => console.error('Error:', error))
+      .then(response => console.log('Success:', response));
+      // .then(function(response) {
+      //     return (response.json());
+      // })
+      // .then(function(data) {
+      //     console.log(data);
+      // })
 
       console.log(userName, password)
 
@@ -19,6 +39,7 @@ const SignUp = ({ onSubmit }) => {
         //IN DB
           
       } 
+      
     }
 
     const onPressSignUp = () => {
