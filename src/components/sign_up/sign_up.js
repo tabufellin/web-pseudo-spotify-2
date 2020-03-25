@@ -36,6 +36,9 @@ const SignUp = ({ onSubmit }) => {
     return (
 
       <div className="form">
+        <form action="/sign-up" method="POST" >
+
+        
         <h1>Sign Up</h1>
         <p>¡Estas a punto de crear tu cuenta!</p>
         <input
@@ -50,11 +53,13 @@ const SignUp = ({ onSubmit }) => {
           value={password}
           onChange={e => changePassword(e.target.value)}
         />
-        <Link to={{pathname: '/'} }>
+        <Link to={{pathname: '/sign-up'} }>
           <button type="submit" onClick={onPress}>
             Submit
           </button>
         </Link>
+
+        </form>
       </div>
       
     );

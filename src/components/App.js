@@ -11,10 +11,6 @@ import AddSong from './add_song/add_song'
 // We give each route either a target `component`, or we can send functions in `render` or `children` 
 // that return valid nodes. `children` always returns the given node whether there is a match or not.
 const App = () => (
-
-     // <Link to="/">Login Screen</Link>
-      //<Link to='/admin'>Create event</Link>
-      //<Link to="/user">Contact</Link>
       
       <Switch>
 
