@@ -17,14 +17,22 @@ const Search = ({searching}) => {
         dataBasetoLook = 'artist'
     }
 */
+    const onClick = () => {
+        fetch('http://localhost:3001/songs')
+        .then(function(response) {
+            return (response.json());
+        })
+        .then(function(data) {
+            console.log(data);
+        })
+    }
 
     return (
 
       <Fragment>
           <h1> search for  {searching}</h1>
 
-
-
+          <button className="searchButton" onClick={onClick}>Buscar</button>
       </Fragment>
       
     );

@@ -42,35 +42,35 @@ const LoginScreen = ({ onSubmit }) => {
       <div className="form">
         <h1>Log In</h1>
 
-        <div class="input-group mb-3">
-              <div class="input-group-prepend">
-               <span class="input-group-text" id="basic-addon1">@</span>
+        <div className="input-group mb-3">
+              <div className="input-group-prepend">
+               <span className="input-group-text" id="basic-addon1">@</span>
               </div>
             <input 
-              type="text" class="form-control" placeholder="Username" 
+              type="text" className="form-control" placeholder="Username" 
               aria-label="Username" aria-describedby="basic-addon1" 
               value={userName} onChange={e => changeUserName(e.target.value)}/>
         </div>
 
-        <div class="input-group mb-3">
-              <div class="input-group-prepend">
-               <span class="input-group-text" id="basic-addon1">*</span>
+        <div className="input-group mb-3">
+              <div className="input-group-prepend">
+               <span className="input-group-text" id="basic-addon1">*</span>
               </div>
             <input 
-              type="password" class="form-control" placeholder="password" 
+              type="password" className="form-control" placeholder="password" 
               aria-label="password" aria-describedby="basic-addon1" 
               value={password} onChange={e => changePassword(e.target.value)}/>
         </div>
 
         <Link to={`/user/${userName}`}>
-          <button type="submit" class='btn btn-primary' onClick={onPressLogin}>
+          <button type="submit" className='btn btn-primary' onClick={onPressLogin}>
             Submit
           </button>
         </Link>
 
         <p>¿No tienes una cuenta?</p>
         <Link to={{pathname: '/sign-up'} }>
-          <button type="submit" class='btn btn-primary ' onClick={onPressSignUp}>
+          <button type="submit" className='btn btn-primary ' onClick={onPressSignUp}>
             Sign up
           </button>
         </Link>
