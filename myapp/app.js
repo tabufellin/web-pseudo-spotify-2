@@ -1,5 +1,12 @@
 var createError = require('http-errors');
+
 var express = require('express');
+
+//////////////////FORM
+var bodyParser = require('body-parser')
+//////////////////////
+
+
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
@@ -10,6 +17,13 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 
+var urlencodedParser = bodyParser.urlencoded({
+	extended: false
+})
+
+app.post('/', urlencodedParser, function (req, res) {
+	res.send('welcome, ' + req.body.username)
+  })
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -92,15 +106,39 @@ app.get('/album', (req, res) => {
 	        client.end()
 	    })
 });
-app.get('/songs', (req, res) => {
+app.get('/stadistics-artist-album', (req, res) => {
 	const { Client } = require('pg')
 	const connectionData = {
 	  user: 'postgres',
 	  host: '127.0.0.1',
 	  database: 'Project1db',
-	  password: 'ohdude9912',
+	  password: 'hola mundo',
 	  port: 5432,
 	}
+	const client = new Client(connectionData)
+
+	client.connect()
+	client.query('Select count(*) as cantAlbum, artist.name FROM artist INNER JOIN album ON artist.artistid = album.artistid GROUP BY album.artistid, artist.name ORDER BY cantAlbum DESC LIMIT 5;')
+	    .then(response => {
+	        res.json(response.rows)
+	        client.end()
+	    })
+	    .catch(err => {
+	        client.end()
+	    })
+});
+
+app.get('/stadistics', (req, res) => {
+	const { Client } = require('pg')
+
+	const connectionData = {
+	  user: 'postgres',
+	  host: '127.0.0.1',
+	  database: 'Project1db',
+	  password: 'hola mundo',
+	  port: 5432,
+	}
+
 	const client = new Client(connectionData)
 
 	client.connect()
@@ -114,7 +152,23 @@ app.get('/songs', (req, res) => {
 	    })
 });
 
+app.post('/user/:username', function(req, res){
+	res.send("recieved your request!");
+	const { Client } = require('pg')
 
+	const client = new Client(connectionData)
+
+	client.connect()
+	client.query('SELECT name FROM artist')
+	    .then(response => {
+	        res.json(response.rows)
+	        client.end()
+	    })
+	    .catch(err => {
+	        client.end()
+	    })
+ });
+ 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

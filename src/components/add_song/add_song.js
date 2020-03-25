@@ -62,7 +62,7 @@ const AddSong = ({ onSubmit }) => {
           onChange={e => changePricePerUnit(e.target.value)}
         />
 
-        <button type="submit" class='btn btn-primary' onClick={onPress}>
+        <button type="submit" className='btn btn-primary' onClick={onPress}>
         add
         </button>
 
