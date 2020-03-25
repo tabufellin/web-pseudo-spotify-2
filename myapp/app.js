@@ -27,8 +27,8 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 console.log("Todo listo")
 
-app.post('/signup', (req, res) => {
-	// console.log(req.body.userName)
+app.get('/signup', (req, res) => {
+	console.log(req.body.userName)
 	const { Client } = require('pg')
 	const connectionData = {
 	  user: 'postgres',
