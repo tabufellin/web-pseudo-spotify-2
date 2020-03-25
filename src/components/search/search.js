@@ -1,39 +1,47 @@
-import React, {  Fragment } from 'react'
+import React, { useState, Fragment } from 'react'
 import { createBrowserHistory } from 'history'
 export const history = createBrowserHistory()
 const Search = ({searching}) => {
+    const [search, changeSearch] = useState('');
 
    /* const dataBasetoLook = "none"*/
 
-    const onClick = () => {
+    const onClick = (search) => {
+
         if (searching === 'song') {
-            fetch('http://localhost:3001/songs')
-            .then(function(response) {
-                return (response.json());
+            const request = new Request('http://localhost:3001/song',{
+                method:'POST',
+                headers: { 'Content-Type':'application/json'},
+                body: JSON.stringify({search:search})
             })
-            .then(function(data) {
-                console.log(data);
-            })
+
+            fetch(request).then(res => res.json())
+            .catch(error => console.error('Error:', error))
+            .then(response => console.log('Success:', response));
         }
 
         if (searching === 'album') {
-            fetch('http://localhost:3001/album')
-            .then(function(response) {
-                return (response.json());
+            const request = new Request('http://localhost:3001/album',{
+                method:'POST',
+                headers: { 'Content-Type':'application/json'},
+                body: JSON.stringify({search:search})
             })
-            .then(function(data) {
-                console.log(data);
-            })
+
+            fetch(request).then(res => res.json())
+            .catch(error => console.error('Error:', error))
+            .then(response => console.log('Success:', response));
         }
 
         if (searching === 'artist' ) {
-            fetch('http://localhost:3001/artist')
-            .then(function(response) {
-                return (response.json());
+            const request = new Request('http://localhost:3001/artist',{
+                method:'POST',
+                headers: { 'Content-Type':'application/json'},
+                body: JSON.stringify({search:search})
             })
-            .then(function(data) {
-                console.log(data);
-            })
+
+            fetch(request).then(res => res.json())
+            .catch(error => console.error('Error:', error))
+            .then(response => console.log('Success:', response));
         }
 
 
@@ -44,8 +52,13 @@ const Search = ({searching}) => {
 
       <Fragment>
           <h1> search for  {searching}</h1>
-
-          <button className="searchButton" onClick={onClick}>Buscar</button>
+          <input
+          type="text"
+          placeholder="búsqueda"
+          value={search}
+          onChange={e => changeSearch(e.target.value)}
+        />
+          <button className="searchButton" onClick={() => onClick(search)}>Buscar</button>
       </Fragment>
       
     );

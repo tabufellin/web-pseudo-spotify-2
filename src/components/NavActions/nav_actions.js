@@ -13,13 +13,13 @@ const NavActions = ({path}) => {
             <nav>
                 <ul>
                     <Link to={`${path}/search/song`}>
-                        <li class="list-group-item list-group-item-primary"> song </li>
+                        <li className="list-group-item list-group-item-primary"> song </li>
                     </Link>
                     <Link to={`${path}/search/album`}>
-                        <li class="list-group-item list-group-item-primary"> album </li>
+                        <li className="list-group-item list-group-item-primary"> album </li>
                     </Link>
                     <Link to={`${path}/search/artist`}>
-                        <li class="list-group-item list-group-item-primary"> artist </li>
+                        <li className="list-group-item list-group-item-primary"> artist </li>
                     </Link>
                 </ul>
 
@@ -30,13 +30,13 @@ const NavActions = ({path}) => {
             <nav>
                 <ul>
                     <Link to={`${path}/add/song`}>
-                        <li class="list-group-item list-group-item-primary"> song </li>
+                        <li className="list-group-item list-group-item-primary"> song </li>
                     </Link>
                     <Link to={`${path}/add/album`}>
-                        <li class="list-group-item list-group-item-primary"> album </li>
+                        <li className="list-group-item list-group-item-primary"> album </li>
                     </Link>
                     <Link to={`${path}/add/artist`}>
-                        <li class="list-group-item list-group-item-primary"> artist </li>
+                        <li className="list-group-item list-group-item-primary"> artist </li>
                     </Link>
                 </ul>
             </nav>

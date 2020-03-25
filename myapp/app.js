@@ -41,8 +41,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 console.log("Todo listo")
 
-app.get('/signup', (req, res) => {
-	console.log(req.body.userName)
+app.post('/signup',function(request,response){
 	const { Client } = require('pg')
 	const connectionData = {
 	  user: 'postgres',
@@ -54,17 +53,18 @@ app.get('/signup', (req, res) => {
 	const client = new Client(connectionData)
 
 	client.connect()
-	client.query('SELECT * FROM artist')
-	    .then(response => {
+    const values = Object.values(request.body)
+    console.log(values)
+    client.query("INSERT INTO Users (username,password,hasPermision) VALUES ($1,$2,$3)",values)
+    	.then(response => {
 	        res.json(response.rows)
 	        client.end()
 	    })
 	    .catch(err => {
 	        client.end()
 	    })
-});
-
-app.get('/artist', (req, res) => {
+	});
+app.post('/song', function(req, res){
 	const { Client } = require('pg')
 	const connectionData = {
 	  user: 'postgres',
@@ -76,7 +76,9 @@ app.get('/artist', (req, res) => {
 	const client = new Client(connectionData)
 
 	client.connect()
-	client.query('SELECT * FROM artist')
+	const value = Object.values(req.body)
+	console.log(value)
+	client.query("SELECT * FROM track WHERE track.name ILIKE $1",value)
 	    .then(response => {
 	        res.json(response.rows)
 	        client.end()
@@ -85,7 +87,7 @@ app.get('/artist', (req, res) => {
 	        client.end()
 	    })
 });
-app.get('/album', (req, res) => {
+app.post('/artist', function(req, res){
 	const { Client } = require('pg')
 	const connectionData = {
 	  user: 'postgres',
@@ -97,7 +99,9 @@ app.get('/album', (req, res) => {
 	const client = new Client(connectionData)
 
 	client.connect()
-	client.query('SELECT * FROM album')
+	const value = Object.values(req.body)
+	console.log(value)
+	client.query('SELECT * FROM artist WHERE artist.name ILIKE $1',value)
 	    .then(response => {
 	        res.json(response.rows)
 	        client.end()
@@ -106,13 +110,37 @@ app.get('/album', (req, res) => {
 	        client.end()
 	    })
 });
-app.get('/stadistics-artist-album', (req, res) => {
+app.post('/album', function(req, res){
 	const { Client } = require('pg')
 	const connectionData = {
 	  user: 'postgres',
 	  host: '127.0.0.1',
 	  database: 'Project1db',
-	  password: 'hola mundo',
+	  password: 'ohdude9912',
+	  port: 5432,
+	}
+	const client = new Client(connectionData)
+
+	client.connect()
+	const value = Object.values(req.body)
+	console.log(value)
+	client.query('SELECT * FROM album WHERE album.title ILIKE $1',value)
+	    .then(response => {
+	        res.json(response.rows)
+	        client.end()
+	    })
+	    .catch(err => {
+	        client.end()
+	    })
+});
+
+app.get('/stadistics/1', (req, res) => {
+	const { Client } = require('pg')
+	const connectionData = {
+	  user: 'postgres',
+	  host: '127.0.0.1',
+	  database: 'Project1db',
+	  password: 'ohdude9912',
 	  port: 5432,
 	}
 	const client = new Client(connectionData)
@@ -127,22 +155,19 @@ app.get('/stadistics-artist-album', (req, res) => {
 	        client.end()
 	    })
 });
-
-app.get('/stadistics', (req, res) => {
+app.get('/stadistics/2', (req, res) => {
 	const { Client } = require('pg')
-
 	const connectionData = {
 	  user: 'postgres',
 	  host: '127.0.0.1',
 	  database: 'Project1db',
-	  password: 'hola mundo',
+	  password: 'ohdude9912',
 	  port: 5432,
 	}
-
 	const client = new Client(connectionData)
 
 	client.connect()
-	client.query('SELECT * FROM track')
+	client.query('Select count(*) as cantCanciones, genre.name FROM genre INNER JOIN track ON genre.genreid = track.genreid GROUP BY genre.genreid, genre.name ORDER BY cantCanciones DESC LIMIT 5;')
 	    .then(response => {
 	        res.json(response.rows)
 	        client.end()
@@ -151,6 +176,112 @@ app.get('/stadistics', (req, res) => {
 	        client.end()
 	    })
 });
+app.get('/stadistics/3', (req, res) => {
+	const { Client } = require('pg')
+	const connectionData = {
+	  user: 'postgres',
+	  host: '127.0.0.1',
+	  database: 'Project1db',
+	  password: 'ohdude9912',
+	  port: 5432,
+	}
+	const client = new Client(connectionData)
+
+	client.connect()
+	client.query('SELECT sum(t.milliseconds), p.name, p.playlistid FROM playlist as p LEFT JOIN (playlipsttrack as pt INNER JOIN track as t ON pt.trackid = t.trackid) ON p.playlistid = pt.playlistid GROUP BY pt.playlistid, p.playlistid;')
+	    .then(response => {
+	        res.json(response.rows)
+	        client.end()
+	    })
+	    .catch(err => {
+	        client.end()
+	    })
+});
+app.get('/stadistics/4', (req, res) => {
+	const { Client } = require('pg')
+	const connectionData = {
+	  user: 'postgres',
+	  host: '127.0.0.1',
+	  database: 'Project1db',
+	  password: 'ohdude9912',
+	  port: 5432,
+	}
+	const client = new Client(connectionData)
+
+	client.connect()
+	client.query('SELECT a.artistid, a.name, t.milliseconds, t.name FROM track as t INNER JOIN (artist as a INNER JOIN album as al ON a.artistid = al.artistid) ON t.albumid = al.albumid ORDER BY t.milliseconds DESC LIMIT 5;')
+	    .then(response => {
+	        res.json(response.rows)
+	        client.end()
+	    })
+	    .catch(err => {
+	        client.end()
+	    })
+});
+app.get('/stadistics/6', (req, res) => {
+	const { Client } = require('pg')
+	const connectionData = {
+	  user: 'postgres',
+	  host: '127.0.0.1',
+	  database: 'Project1db',
+	  password: 'ohdude9912',
+	  port: 5432,
+	}
+	const client = new Client(connectionData)
+
+	client.connect()
+	client.query('SELECT AVG(t.milliseconds) as prom, g.name FROM track as t INNER JOIN genre as g ON t.genreid = g.genreid GROUP BY t.genreid, g.name;')
+	    .then(response => {
+	        res.json(response.rows)
+	        client.end()
+	    })
+	    .catch(err => {
+	        client.end()
+	    })
+});
+app.get('/stadistics/7', (req, res) => {
+	const { Client } = require('pg')
+	const connectionData = {
+	  user: 'postgres',
+	  host: '127.0.0.1',
+	  database: 'Project1db',
+	  password: 'ohdude9912',
+	  port: 5432,
+	}
+	const client = new Client(connectionData)
+
+	client.connect()
+	client.query('SELECT G.Name, COUNT(G.name) FROM (SELECT Playlist.Name as name, COUNT(Track.AlbumId) as number_of_artists FROM PlaylistTrack JOIN Playlist ON PlaylistTrack.PlaylistId=Playlist.PlaylistId JOIN Track ON PlaylistTrack.TrackId=Track.TrackId GROUP BY (Playlist.Name,Track.AlbumId)) G Group by G.name;')
+	    .then(response => {
+	        res.json(response.rows)
+	        client.end()
+	    })
+	    .catch(err => {
+	        client.end()
+	    })
+});
+app.get('/stadistics/8', (req, res) => {
+	const { Client } = require('pg')
+	const connectionData = {
+	  user: 'postgres',
+	  host: '127.0.0.1',
+	  database: 'Project1db',
+	  password: 'ohdude9912',
+	  port: 5432,
+	}
+	const client = new Client(connectionData)
+
+	client.connect()
+	client.query('SELECT Artist.name, COUNT(Artist.name) FROM (SELECT Artist.artistid as artist,track.genreid as genre FROM ARTIST JOIN Album ON Album.ArtistId=Artist.ArtistId JOIN TRACK ON Track.AlbumId=Album.AlbumId GROUP BY(artist.artistID,track.genreid)) G JOIN Artist ON G.artist=Artist.artistid JOIN Genre ON G.genre=Genre.genreid GROUP BY (Artist.name) ORDER BY COUNT(Artist.name) DESC LIMIT 5;')
+	    .then(response => {
+	        res.json(response.rows)
+	        client.end()
+	    })
+	    .catch(err => {
+	        client.end()
+	    })
+});
+
 
 app.post('/user/:username', function(req, res){
 	res.send("recieved your request!");

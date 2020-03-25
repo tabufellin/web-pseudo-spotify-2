@@ -9,35 +9,67 @@ import React, { useState, Fragment } from 'react'
 export const history = createBrowserHistory()
 
 const Stadistics = () => {
-    let list = []
-    let location = useLocation();
-   // let lista = [...polloArtistAlbum]
 
-
-   fetch('http://localhost:3001/stadistics-artist-album')
-   .then(function(response) {
-       return (response.json());
-   })
-   .then(function(data) {
-       list=[...data]
-       console.log(list)
+    const onClick = () => {
+        fetch('http://localhost:3001/stadistics/1')
+        .then(function(response) {
+            return (response.json());
+        })
+        .then(function(data) {
+            console.log(data);
+        });
+        fetch('http://localhost:3001/stadistics/2')
+        .then(function(response) {
+            return (response.json());
+        })
+        .then(function(data) {
+            console.log(data);
+        });
+        fetch('http://localhost:3001/stadistics/3')
+        .then(function(response) {
+            return (response.json());
+        })
+        .then(function(data) {
+            console.log(data);
+        });
+        fetch('http://localhost:3001/stadistics/4')
+        .then(function(response) {
+            return (response.json());
+        })
+        .then(function(data) {
+            console.log(data);
+        });
+        fetch('http://localhost:3001/stadistics/6')
+        .then(function(response) {
+            return (response.json());
+        })
+        .then(function(data) {
+            console.log(data);
+        });
+        fetch('http://localhost:3001/stadistics/7')
+        .then(function(response) {
+            return (response.json());
+        })
+        .then(function(data) {
+            console.log(data);
+        });
+        fetch('http://localhost:3001/stadistics/8')
+        .then(function(response) {
+            return (response.json());
+        })
+        .then(function(data) {
+            console.log(data);
+        })
+    }
 
        return (
         <div>
-            <Link to={`/1`}>
-            <button type="submit" className='btn btn-primary ' onClick={onPress1}>
-                Sign up
-            </button>
-            </Link>
 
+        <button type="submit" className='btn btn-primary ' onClick={onClick}>
+            Generate Stadistics
+        </button>
 
-                    <Link to={`/1`}>
-                        <li class="list-group-item list-group-item-primary"> <Query1 list={list}></Query1> </li>
-                    </Link>
-   
-
-  
-
+        <p>Artistas con más álbumes publicados</p>
         <p>Géneros con más canciones</p>
         <p>Total de duración de cada playlist</p>
         <p>Caciones de mayor duración con la información de sus artistas</p>
@@ -48,8 +80,6 @@ const Stadistics = () => {
     )
 
     return
- 
-   })
 }
 
 
@@ -86,5 +116,5 @@ const Stadistics = () => {
     );
   } 
 
-
-export default Stadistics*/
+*/
+export default Stadistics
