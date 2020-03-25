@@ -19,7 +19,6 @@ const SignUp = ({ onSubmit }) => {
         //IN DB
           
       } 
-
     }
 
     const onPressSignUp = () => {
@@ -27,12 +26,12 @@ const SignUp = ({ onSubmit }) => {
       if (userName !== null && password !== null) {
         //TODO TO VALIDATE THE USERuserName AND PASSWORD 
         //IN DB
-
-
       }
-
     }
 
+    const componentDidMount = () => {
+      console.log("mounted");
+    }
 
     return (
 
