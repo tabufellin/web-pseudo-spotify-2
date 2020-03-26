@@ -64,6 +64,55 @@ app.post('/signup',function(request,response){
 	        client.end()
 	    })
 	});
+
+app.post('/addSong',function(request,response){
+	const { Client } = require('pg')
+	const connectionData = {
+	  user: 'postgres',
+	  host: '127.0.0.1',
+	  database: 'Project1db',
+	  password: 'ohdude9912',
+	  port: 5432,
+	}
+	const client = new Client(connectionData)
+
+	client.connect()
+    const values = Object.values(request.body)
+    console.log(values)
+    client.query("INSERT INTO track (name,albumid,genreid) VALUES ($1,$2,$3)",values)
+    	.then(response => {
+	        res.json(response.rows)
+	        client.end()
+	    })
+	    .catch(err => {
+	        client.end()
+	    })
+	});
+
+app.post('/addArtist',function(request,response){
+	const { Client } = require('pg')
+	const connectionData = {
+	  user: 'postgres',
+	  host: '127.0.0.1',
+	  database: 'Project1db',
+	  password: 'ohdude9912',
+	  port: 5432,
+	}
+	const client = new Client(connectionData)
+
+	client.connect()
+    const values = Object.values(request.body)
+    console.log(values)
+    client.query("INSERT INTO artist (artistid,name) VALUES ($1,$2)",values)
+    	.then(response => {
+	        res.json(response.rows)
+	        client.end()
+	    })
+	    .catch(err => {
+	        client.end()
+	    })
+	});
+
 app.post('/song', function(req, res){
 	const { Client } = require('pg')
 	const connectionData = {
@@ -188,7 +237,7 @@ app.get('/stadistics/3', (req, res) => {
 	const client = new Client(connectionData)
 
 	client.connect()
-	client.query('SELECT sum(t.milliseconds), p.name, p.playlistid FROM playlist as p LEFT JOIN (playlipsttrack as pt INNER JOIN track as t ON pt.trackid = t.trackid) ON p.playlistid = pt.playlistid GROUP BY pt.playlistid, p.playlistid;')
+	client.query('SELECT sum(t.milliseconds), p.name, p.playlistid FROM playlist as p LEFT JOIN (playlisttrack as pt INNER JOIN track as t ON pt.trackid = t.trackid) ON p.playlistid = pt.playlistid GROUP BY pt.playlistid, p.playlistid;')
 	    .then(response => {
 	        res.json(response.rows)
 	        client.end()
