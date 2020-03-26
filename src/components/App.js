@@ -12,7 +12,26 @@ import Stadistics from './stadistics';
 import Query1 from './query1/query1';
 // We give each route either a target `component`, or we can send functions in `render` or `children` 
 // that return valid nodes. `children` always returns the given node whether there is a match or not.
+
+let list = []
+
+fetch('http://localhost:3001/stadistics/1')
+.then(function(response) {
+    return (response.json());
+})
+.then(function(data) {
+    
+    list = data
+    console.log(list);
+    
+
+});
+
+
 const App = () => (
+
+  
+
       
       <Switch>
 
@@ -52,12 +71,27 @@ const App = () => (
         <Route exact path='/user/:username/add/album' component={AddAlbum}/>
         <Route exact path='/user/:username/add/artist' component={AddArtist}/>  
 
-        <Route exact path='/user/:username/stadistics' component={Stadistics} />   
+        <Route exact path='/user/:username/stadistics'>
+          <Stadistics list={list}></Stadistics>
+        </Route> 
 
         <Route exact path='/1' component={Query1} /> 
         
       </Switch>
 
 );
+
+fetch('http://localhost:3001/stadistics/1')
+.then(function(response) {
+    return (response.json());
+})
+.then(function(data) {
+    
+    list = data
+    console.log(list);
+
+    
+
+})
 
 export default App

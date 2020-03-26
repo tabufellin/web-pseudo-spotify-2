@@ -47,7 +47,7 @@ app.post('/signup',function(request,response){
 	  user: 'postgres',
 	  host: '127.0.0.1',
 	  database: 'Project1db',
-	  password: 'ohdude9912',
+	  password: 'hola mundo',
 	  port: 5432,
 	}
 	const client = new Client(connectionData)
@@ -70,7 +70,7 @@ app.post('/song', function(req, res){
 	  user: 'postgres',
 	  host: '127.0.0.1',
 	  database: 'Project1db',
-	  password: 'ohdude9912',
+	  password: 'hola mundo',
 	  port: 5432,
 	}
 	const client = new Client(connectionData)
@@ -93,7 +93,7 @@ app.post('/artist', function(req, res){
 	  user: 'postgres',
 	  host: '127.0.0.1',
 	  database: 'Project1db',
-	  password: 'ohdude9912',
+	  password: 'hola mundo',
 	  port: 5432,
 	}
 	const client = new Client(connectionData)
@@ -116,7 +116,7 @@ app.post('/album', function(req, res){
 	  user: 'postgres',
 	  host: '127.0.0.1',
 	  database: 'Project1db',
-	  password: 'ohdude9912',
+	  password: 'hola mundo',
 	  port: 5432,
 	}
 	const client = new Client(connectionData)
@@ -140,7 +140,7 @@ app.get('/stadistics/1', (req, res) => {
 	  user: 'postgres',
 	  host: '127.0.0.1',
 	  database: 'Project1db',
-	  password: 'ohdude9912',
+	  password: 'hola mundo',
 	  port: 5432,
 	}
 	const client = new Client(connectionData)
@@ -161,7 +161,7 @@ app.get('/stadistics/2', (req, res) => {
 	  user: 'postgres',
 	  host: '127.0.0.1',
 	  database: 'Project1db',
-	  password: 'ohdude9912',
+	  password: 'hola mundo',
 	  port: 5432,
 	}
 	const client = new Client(connectionData)
@@ -182,13 +182,13 @@ app.get('/stadistics/3', (req, res) => {
 	  user: 'postgres',
 	  host: '127.0.0.1',
 	  database: 'Project1db',
-	  password: 'ohdude9912',
+	  password: 'hola mundo',
 	  port: 5432,
 	}
 	const client = new Client(connectionData)
 
 	client.connect()
-	client.query('SELECT sum(t.milliseconds), p.name, p.playlistid FROM playlist as p LEFT JOIN (playlipsttrack as pt INNER JOIN track as t ON pt.trackid = t.trackid) ON p.playlistid = pt.playlistid GROUP BY pt.playlistid, p.playlistid;')
+	client.query('SELECT sum(t.milliseconds), p.name, p.playlistid FROM playlist as p LEFT JOIN (playlisttrack as pt INNER JOIN track as t ON pt.trackid = t.trackid) ON p.playlistid = pt.playlistid GROUP BY pt.playlistid, p.playlistid;')
 	    .then(response => {
 	        res.json(response.rows)
 	        client.end()
@@ -203,13 +203,13 @@ app.get('/stadistics/4', (req, res) => {
 	  user: 'postgres',
 	  host: '127.0.0.1',
 	  database: 'Project1db',
-	  password: 'ohdude9912',
+	  password: 'hola mundo',
 	  port: 5432,
 	}
 	const client = new Client(connectionData)
 
 	client.connect()
-	client.query('SELECT a.artistid, a.name, t.milliseconds, t.name FROM track as t INNER JOIN (artist as a INNER JOIN album as al ON a.artistid = al.artistid) ON t.albumid = al.albumid ORDER BY t.milliseconds DESC LIMIT 5;')
+	client.query('SELECT a.artistid, a.name, t.milliseconds, t.name as artist_name FROM track as t INNER JOIN (artist as a INNER JOIN album as al ON a.artistid = al.artistid) ON t.albumid = al.albumid ORDER BY t.milliseconds DESC LIMIT 5;')
 	    .then(response => {
 	        res.json(response.rows)
 	        client.end()
@@ -224,7 +224,7 @@ app.get('/stadistics/6', (req, res) => {
 	  user: 'postgres',
 	  host: '127.0.0.1',
 	  database: 'Project1db',
-	  password: 'ohdude9912',
+	  password: 'hola mundo',
 	  port: 5432,
 	}
 	const client = new Client(connectionData)
@@ -245,7 +245,7 @@ app.get('/stadistics/7', (req, res) => {
 	  user: 'postgres',
 	  host: '127.0.0.1',
 	  database: 'Project1db',
-	  password: 'ohdude9912',
+	  password: 'hola mundo',
 	  port: 5432,
 	}
 	const client = new Client(connectionData)
@@ -266,7 +266,7 @@ app.get('/stadistics/8', (req, res) => {
 	  user: 'postgres',
 	  host: '127.0.0.1',
 	  database: 'Project1db',
-	  password: 'ohdude9912',
+	  password: 'hola mundo',
 	  port: 5432,
 	}
 	const client = new Client(connectionData)

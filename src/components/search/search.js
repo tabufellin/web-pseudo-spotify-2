@@ -2,6 +2,9 @@ import React, { useState, Fragment } from 'react'
 import { createBrowserHistory } from 'history'
 export const history = createBrowserHistory()
 const Search = ({searching}) => {
+    const [listSong, setListSong] = useState([])
+    const [listArtist, setListArtist] = useState([])
+    const [listAlbum, setListAlbum] = useState([])
     const [search, changeSearch] = useState('');
 
    /* const dataBasetoLook = "none"*/
@@ -17,10 +20,16 @@ const Search = ({searching}) => {
 
             fetch(request).then(res => res.json())
             .catch(error => console.error('Error:', error))
-            .then(response => console.log('Success:', response));
+            .then(response => {
+                console.log('Success:', response)
+                setListSong([...listSong, ...response]) 
+            });
+
+
         }
 
         if (searching === 'album') {
+            console.log("jfdsalfjsad")
             const request = new Request('http://localhost:3001/album',{
                 method:'POST',
                 headers: { 'Content-Type':'application/json'},
@@ -29,7 +38,10 @@ const Search = ({searching}) => {
 
             fetch(request).then(res => res.json())
             .catch(error => console.error('Error:', error))
-            .then(response => console.log('Success:', response));
+            .then(response => {
+                console.log('Success:', response)
+                setListAlbum([...listAlbum, ...response]) 
+            });
         }
 
         if (searching === 'artist' ) {
@@ -41,7 +53,10 @@ const Search = ({searching}) => {
 
             fetch(request).then(res => res.json())
             .catch(error => console.error('Error:', error))
-            .then(response => console.log('Success:', response));
+            .then(response => {
+                console.log('Success:', response)
+                setListArtist([...listArtist, ...response]) 
+            });
         }
 
 
@@ -59,6 +74,9 @@ const Search = ({searching}) => {
           onChange={e => changeSearch(e.target.value)}
         />
           <button className="searchButton" onClick={() => onClick(search)}>Buscar</button>
+          <p> {listSong.map((i, index) => <div key={index}> Song {i.name}, Artist {i.composer}, time {i.milliseconds}  </div>)}</p>
+          <p> {listAlbum.map((i, index) => <div key={index}> titulo: {i.title}, albumid {i.albumid}, artistid {i.artistid}  </div>)}</p>
+          <p> {listArtist.map((i, index) => <div key={index}>Nombre: {i.name} id {i.artistid}  </div>)}</p>
       </Fragment>
       
     );
