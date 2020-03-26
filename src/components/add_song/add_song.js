@@ -5,31 +5,21 @@ export const history = createBrowserHistory()
 const AddSong = ({ onSubmit }) => {
     const [name, changeName] = useState('');
     const [album, changeAlbum] = useState('');
-    const [gender, changeGender] = useState('');
-    const [pricePerUnit, changePricePerUnit] = useState('');
+    const [genre, changeGenre] = useState('');
     
-    const onPress = () => {
+    const onPress = (name, album, genre) => {
 
-      console.log(name, album, gender, pricePerUnit)
+      console.log("test")
 
-      const validateInDataBase = () =>{
+      const request = new Request('http://localhost:3001/addSong',{
+                method:'POST',
+                headers: { 'Content-Type':'application/json'},
+                body: JSON.stringify({name:name, album:album, genre:genre})
+            })
 
-          //TODO TO SEE THE NAME IS NOT IN THE DATABASE
-
-          return true
-      }
-
-      if (validateInDataBase){
-          // TODO TO ADD THE NEW ARTIST
-
-
-
-          // AT THE END 
-          history.goBack()
-
-      }
-
-
+      fetch(request).then(res => res.json())
+      .catch(error => console.error('Error:', error))
+      .then(response => console.log('Success:', response));
     } 
 
     return (
@@ -51,18 +41,12 @@ const AddSong = ({ onSubmit }) => {
         />
         <input
           type="text"
-          placeholder="gender"
-          value={gender}
-          onChange={e => changeGender(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="price per unit in $"
-          value={pricePerUnit}
-          onChange={e => changePricePerUnit(e.target.value)}
+          placeholder="genre"
+          value={genre}
+          onChange={e => changeGenre(e.target.value)}
         />
 
-        <button type="submit" className='btn btn-primary' onClick={onPress}>
+        <button type="submit" className='btn btn-primary' onClick={() => onPress(name, album, genre)}>
         add
         </button>
 

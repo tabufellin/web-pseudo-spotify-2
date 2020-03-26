@@ -2,33 +2,26 @@ import React, { useState, Fragment } from 'react'
 import { createBrowserHistory } from 'history'
 import { Link } from 'react-router-dom'
 import './styles.css' 
+import { v4 as uuidv4 } from 'uuid';
+
 export const history = createBrowserHistory()
 const AddArtist = ({ onSubmit }) => {
     const [userName, changeUserName] = useState('');
 
-    const onPress = () => {
+    const onPress = (name, album, genre) => {
 
-      console.log(userName)
+      console.log("test")
 
-      const validateInDataBase = () =>{
+      const request = new Request('http://localhost:3001/addArtist',{
+                method:'POST',
+                headers: { 'Content-Type':'application/json'},
+                body: JSON.stringify({artistid: uuidv4(),userName:userName})
+            })
 
-          //TODO TO SEE THE NAME IS NOT IN THE DATABASE
-
-          return true
-      }
-
-      if (validateInDataBase){
-          // TODO TO ADD THE NEW ARTIST
-
-
-
-          // AT THE END 
-          history.goBack()
-
-      }
-
-
-    } 
+      fetch(request).then(res => res.json())
+      .catch(error => console.error('Error:', error))
+      .then(response => console.log('Success:', response));
+    }
 
     
 
