@@ -47,7 +47,7 @@ app.post('/signup',function(request,response){
 	  user: 'postgres',
 	  host: '127.0.0.1',
 	  database: 'Project1db',
-	  password: 'hola mundo',
+	  password: 'ohdude9912',
 	  port: 5432,
 	}
 	const client = new Client(connectionData)
@@ -113,13 +113,37 @@ app.post('/addArtist',function(request,response){
 	    })
 	});
 
+app.post('/checkuser',function(request,response){
+	const { Client } = require('pg')
+	const connectionData = {
+	  user: 'postgres',
+	  host: '127.0.0.1',
+	  database: 'Project1db',
+	  password: 'ohdude9912',
+	  port: 5432,
+	}
+	const client = new Client(connectionData)
+
+	client.connect()
+    const values = Object.values(request.body)
+    console.log(values)
+    client.query("SELECT * FROM Users WHERE Username=$1",values)
+    	.then(response => {
+	        res.json(response.rows)
+	        client.end()
+	    })
+	    .catch(err => {
+	        client.end()
+	    })
+	});
+
 app.post('/song', function(req, res){
 	const { Client } = require('pg')
 	const connectionData = {
 	  user: 'postgres',
 	  host: '127.0.0.1',
 	  database: 'Project1db',
-	  password: 'hola mundo',
+	  password: 'ohdude9912',
 	  port: 5432,
 	}
 	const client = new Client(connectionData)
@@ -142,7 +166,7 @@ app.post('/artist', function(req, res){
 	  user: 'postgres',
 	  host: '127.0.0.1',
 	  database: 'Project1db',
-	  password: 'hola mundo',
+	  password: 'ohdude9912',
 	  port: 5432,
 	}
 	const client = new Client(connectionData)
@@ -165,7 +189,7 @@ app.post('/album', function(req, res){
 	  user: 'postgres',
 	  host: '127.0.0.1',
 	  database: 'Project1db',
-	  password: 'hola mundo',
+	  password: 'ohdude9912',
 	  port: 5432,
 	}
 	const client = new Client(connectionData)
@@ -189,7 +213,7 @@ app.get('/stadistics/1', (req, res) => {
 	  user: 'postgres',
 	  host: '127.0.0.1',
 	  database: 'Project1db',
-	  password: 'hola mundo',
+	  password: 'ohdude9912',
 	  port: 5432,
 	}
 	const client = new Client(connectionData)
@@ -210,7 +234,7 @@ app.get('/stadistics/2', (req, res) => {
 	  user: 'postgres',
 	  host: '127.0.0.1',
 	  database: 'Project1db',
-	  password: 'hola mundo',
+	  password: 'ohdude9912',
 	  port: 5432,
 	}
 	const client = new Client(connectionData)
@@ -231,7 +255,7 @@ app.get('/stadistics/3', (req, res) => {
 	  user: 'postgres',
 	  host: '127.0.0.1',
 	  database: 'Project1db',
-	  password: 'hola mundo',
+	  password: 'ohdude9912',
 	  port: 5432,
 	}
 	const client = new Client(connectionData)
@@ -252,13 +276,13 @@ app.get('/stadistics/4', (req, res) => {
 	  user: 'postgres',
 	  host: '127.0.0.1',
 	  database: 'Project1db',
-	  password: 'hola mundo',
+	  password: 'ohdude9912',
 	  port: 5432,
 	}
 	const client = new Client(connectionData)
 
 	client.connect()
-	client.query('SELECT a.artistid, a.name, t.milliseconds, t.name as artist_name FROM track as t INNER JOIN (artist as a INNER JOIN album as al ON a.artistid = al.artistid) ON t.albumid = al.albumid ORDER BY t.milliseconds DESC LIMIT 5;')
+	client.query('SELECT a.artistid, a.name, t.milliseconds, t.name FROM track as t INNER JOIN (artist as a INNER JOIN album as al ON a.artistid = al.artistid) ON t.albumid = al.albumid ORDER BY t.milliseconds DESC LIMIT 5;')
 	    .then(response => {
 	        res.json(response.rows)
 	        client.end()
@@ -273,7 +297,7 @@ app.get('/stadistics/6', (req, res) => {
 	  user: 'postgres',
 	  host: '127.0.0.1',
 	  database: 'Project1db',
-	  password: 'hola mundo',
+	  password: 'ohdude9912',
 	  port: 5432,
 	}
 	const client = new Client(connectionData)
@@ -294,7 +318,7 @@ app.get('/stadistics/7', (req, res) => {
 	  user: 'postgres',
 	  host: '127.0.0.1',
 	  database: 'Project1db',
-	  password: 'hola mundo',
+	  password: 'ohdude9912',
 	  port: 5432,
 	}
 	const client = new Client(connectionData)
@@ -315,7 +339,7 @@ app.get('/stadistics/8', (req, res) => {
 	  user: 'postgres',
 	  host: '127.0.0.1',
 	  database: 'Project1db',
-	  password: 'hola mundo',
+	  password: 'ohdude9912',
 	  port: 5432,
 	}
 	const client = new Client(connectionData)
