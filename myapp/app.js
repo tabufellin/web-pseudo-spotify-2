@@ -261,7 +261,7 @@ app.get('/stadistics/3', (req, res) => {
 	const client = new Client(connectionData)
 
 	client.connect()
-	client.query('SELECT sum(t.milliseconds), p.name, p.playlistid FROM playlist as p LEFT JOIN (playlisttrack as pt INNER JOIN track as t ON pt.trackid = t.trackid) ON p.playlistid = pt.playlistid GROUP BY pt.playlistid, p.playlistid;')
+	client.query('SELECT sum(t.milliseconds), p.name FROM playlist as p INNER JOIN (playlisttrack as pt INNER JOIN track as t ON pt.trackid = t.trackid) ON p.playlistid = pt.playlistid GROUP BY pt.playlistid, p.playlistid;')
 	    .then(response => {
 	        res.json(response.rows)
 	        client.end()
@@ -282,7 +282,7 @@ app.get('/stadistics/4', (req, res) => {
 	const client = new Client(connectionData)
 
 	client.connect()
-	client.query('SELECT a.artistid, a.name, t.milliseconds, t.name FROM track as t INNER JOIN (artist as a INNER JOIN album as al ON a.artistid = al.artistid) ON t.albumid = al.albumid ORDER BY t.milliseconds DESC LIMIT 5;')
+	client.query('SELECT a.name, t.milliseconds, t.name FROM track as t INNER JOIN (artist as a INNER JOIN album as al ON a.artistid = al.artistid) ON t.albumid = al.albumid ORDER BY t.milliseconds DESC LIMIT 5;')
 	    .then(response => {
 	        res.json(response.rows)
 	        client.end()
