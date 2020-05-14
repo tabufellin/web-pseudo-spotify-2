@@ -1,12 +1,10 @@
+const { uuid } = require('uuidv4');
+const password = "hola mundo"
 var createError = require('http-errors');
-
 var express = require('express');
-
 //////////////////FORM
 var bodyParser = require('body-parser')
 //////////////////////
-
-
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
@@ -14,7 +12,6 @@ var cors = require('cors');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-
 var app = express();
 
 var urlencodedParser = bodyParser.urlencoded({
@@ -47,23 +44,55 @@ app.post('/signup',function(request,response){
 	  user: 'postgres',
 	  host: '127.0.0.1',
 	  database: 'Project1db',
-	  password: 'ohdude9912',
+	  password: password,
 	  port: 5432,
 	}
 	const client = new Client(connectionData)
 
 	client.connect()
     const values = Object.values(request.body)
-    console.log(values)
-    client.query("INSERT INTO Users (username,password,hasPermision) VALUES ($1,$2,$3)",values)
+	
+	valuesWithAutoId =  [uuid() , ...values]
+	console.log(valuesWithAutoId)
+    client.query("INSERT INTO client (userid, username,password) VALUES ($1,$2,$3)",valuesWithAutoId)
     	.then(response => {
-	        res.json(response.rows)
+			console.log("hola!")
+	        response.json(response.rows)
 	        client.end()
 	    })
 	    .catch(err => {
+			console.log(err)
 	        client.end()
 	    })
 	});
+
+app.post('/login',function(request, res){
+	const { Client } = require('pg')
+	const connectionData = {
+		user: 'postgres',
+		host: '127.0.0.1',
+		database: 'Project1db',
+		password: password,
+		port: 5432,
+	}
+	const client = new Client(connectionData)
+
+	client.connect()
+	const values = Object.values(request.body)
+	console.log(values)
+	client.query("SELECT * FROM client WHERE client.username = $1 AND client.password = $2 ",values)
+		.then(response => {
+			console.log(response)
+			console.log("ayuda dios")
+			res.json(response.rows)
+			
+			client.end()
+		})
+		.catch(err => {
+			client.end()
+		})
+});
+
 
 app.post('/addSong',function(request,response){
 	const { Client } = require('pg')
@@ -71,7 +100,7 @@ app.post('/addSong',function(request,response){
 	  user: 'postgres',
 	  host: '127.0.0.1',
 	  database: 'Project1db',
-	  password: 'ohdude9912',
+	  password: password,
 	  port: 5432,
 	}
 	const client = new Client(connectionData)
@@ -95,7 +124,7 @@ app.post('/addArtist',function(request,response){
 	  user: 'postgres',
 	  host: '127.0.0.1',
 	  database: 'Project1db',
-	  password: 'ohdude9912',
+	  password: password,
 	  port: 5432,
 	}
 	const client = new Client(connectionData)
@@ -113,29 +142,7 @@ app.post('/addArtist',function(request,response){
 	    })
 	});
 
-app.post('/checkuser',function(request,response){
-	const { Client } = require('pg')
-	const connectionData = {
-	  user: 'postgres',
-	  host: '127.0.0.1',
-	  database: 'Project1db',
-	  password: 'ohdude9912',
-	  port: 5432,
-	}
-	const client = new Client(connectionData)
 
-	client.connect()
-    const values = Object.values(request.body)
-    console.log(values)
-    client.query("SELECT * FROM Users WHERE Username=$1",values)
-    	.then(response => {
-	        res.json(response.rows)
-	        client.end()
-	    })
-	    .catch(err => {
-	        client.end()
-	    })
-	});
 
 app.post('/song', function(req, res){
 	const { Client } = require('pg')
@@ -143,7 +150,7 @@ app.post('/song', function(req, res){
 	  user: 'postgres',
 	  host: '127.0.0.1',
 	  database: 'Project1db',
-	  password: 'ohdude9912',
+	  password: password,
 	  port: 5432,
 	}
 	const client = new Client(connectionData)
@@ -166,7 +173,7 @@ app.post('/artist', function(req, res){
 	  user: 'postgres',
 	  host: '127.0.0.1',
 	  database: 'Project1db',
-	  password: 'ohdude9912',
+	  password: password,
 	  port: 5432,
 	}
 	const client = new Client(connectionData)
@@ -189,7 +196,7 @@ app.post('/album', function(req, res){
 	  user: 'postgres',
 	  host: '127.0.0.1',
 	  database: 'Project1db',
-	  password: 'ohdude9912',
+	  password: password,
 	  port: 5432,
 	}
 	const client = new Client(connectionData)
@@ -213,7 +220,7 @@ app.get('/stadistics/1', (req, res) => {
 	  user: 'postgres',
 	  host: '127.0.0.1',
 	  database: 'Project1db',
-	  password: 'ohdude9912',
+	  password: password,
 	  port: 5432,
 	}
 	const client = new Client(connectionData)
@@ -234,7 +241,7 @@ app.get('/stadistics/2', (req, res) => {
 	  user: 'postgres',
 	  host: '127.0.0.1',
 	  database: 'Project1db',
-	  password: 'ohdude9912',
+	  password: password,
 	  port: 5432,
 	}
 	const client = new Client(connectionData)
@@ -255,7 +262,7 @@ app.get('/stadistics/3', (req, res) => {
 	  user: 'postgres',
 	  host: '127.0.0.1',
 	  database: 'Project1db',
-	  password: 'ohdude9912',
+	  password: password,
 	  port: 5432,
 	}
 	const client = new Client(connectionData)
@@ -276,7 +283,7 @@ app.get('/stadistics/4', (req, res) => {
 	  user: 'postgres',
 	  host: '127.0.0.1',
 	  database: 'Project1db',
-	  password: 'ohdude9912',
+	  password: password,
 	  port: 5432,
 	}
 	const client = new Client(connectionData)
@@ -297,7 +304,7 @@ app.get('/stadistics/6', (req, res) => {
 	  user: 'postgres',
 	  host: '127.0.0.1',
 	  database: 'Project1db',
-	  password: 'ohdude9912',
+	  password: password,
 	  port: 5432,
 	}
 	const client = new Client(connectionData)
@@ -318,7 +325,7 @@ app.get('/stadistics/7', (req, res) => {
 	  user: 'postgres',
 	  host: '127.0.0.1',
 	  database: 'Project1db',
-	  password: 'ohdude9912',
+	  password: password,
 	  port: 5432,
 	}
 	const client = new Client(connectionData)
@@ -339,7 +346,7 @@ app.get('/stadistics/8', (req, res) => {
 	  user: 'postgres',
 	  host: '127.0.0.1',
 	  database: 'Project1db',
-	  password: 'ohdude9912',
+	  password: password,
 	  port: 5432,
 	}
 	const client = new Client(connectionData)
