@@ -18,7 +18,29 @@ const LoginScreen = ({ onSubmit }) => {
         if (userName === 'admin' && password === 'admin') {
           history.push('/user/admin')
         } else {
-          history.push('/user/' + userName)
+          console.log("voy a buscar")
+
+          const request = new Request('http://localhost:3001/login',{
+            method:'POST',
+            headers: { 'Content-Type':'application/json'},
+            body: JSON.stringify({userName:userName,password:password})
+          })
+          console.log("sdjlksdjaflkdsjflkjdslkfjsdlj")
+          fetch(request).then(res => {
+            console.log("hola")
+            return res.json()}
+          )
+          .catch(error => console.error('Error:', error))
+          .then(res => {
+            console.log('Success:', res)
+            console.log("hfsdofjsdklfjlsajflsd")
+          }) 
+          
+
+            
+     
+
+          
         }
       } 
 
@@ -62,12 +84,13 @@ const LoginScreen = ({ onSubmit }) => {
                   aria-label="password" aria-describedby="basic-addon1" 
                   value={password} onChange={e => changePassword(e.target.value)}/>
             </div>
-
-            <Link to={`/user/${userName}`}>
+            <Link to={{pathname: '/login'} }>
               <button type="submit" className='btn btn-primary' onClick={onPressLogin}>
-                Submit
-              </button>
+                  Submit
+                </button>
             </Link>
+
+
 
             <p>¿No tienes una cuenta?</p>
             <Link to={{pathname: '/sign-up'} }>
