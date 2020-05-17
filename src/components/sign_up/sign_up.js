@@ -13,7 +13,7 @@ const SignUp = ({ onSubmit }) => {
       const request = new Request('http://localhost:3001/signup',{
                 method:'POST',
                 headers: { 'Content-Type':'application/json'},
-                body: JSON.stringify({userName:userName,password:password,hasPermision:false})
+                body: JSON.stringify({userName:userName,password:password})
             })
 
       fetch(request).then(res => res.json())

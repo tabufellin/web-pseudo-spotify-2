@@ -15,7 +15,7 @@ import Query1 from './query1/query1';
 
 let list = []
 
-fetch('http://localhost:3001/stadistics/1')
+/*fetch('http://localhost:3001/stadistics/1')
 .then(function(response) {
     return (response.json());
 })
@@ -25,21 +25,17 @@ fetch('http://localhost:3001/stadistics/1')
     console.log(list);
     
 
-});
+});*/
 
 
 const App = () => (
 
-  
-
-      
       <Switch>
 
         <Route exact path="/" component={LoginScreen}/>
-        <Route exact path="/user/admin" component={Admin} />
-        <Route exact path="/user/:username">
-          <User></User>
-        </Route>
+        <Route exact path="/user/admin" component={LoginScreen} />
+        <Route exact path="/user/:username" component={LoginScreen} />
+        <Route exact path="/login" component={LoginScreen} />
         <Route exact path="/sign-up" component={SignUp} />
 
       
@@ -81,7 +77,7 @@ const App = () => (
 
 );
 
-fetch('http://localhost:3001/stadistics/1')
+/*fetch('http://localhost:3001/stadistics/1')
 .then(function(response) {
     return (response.json());
 })
@@ -92,6 +88,6 @@ fetch('http://localhost:3001/stadistics/1')
 
     
 
-})
+})*/
 
 export default App

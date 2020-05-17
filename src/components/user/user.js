@@ -6,7 +6,7 @@ import { useLocation } from 'react-router-dom'
 
 
 export const history = createBrowserHistory()
-const User = ({path}) => {
+const User = () => {
     let location = useLocation();
     //console.log(location.pathname);
 
