@@ -104,7 +104,7 @@ const LoginScreen = ({ onSubmit, loggedIn }) => {
                 <button type="submit" className='btn btn-primary' onClick={onPressLogin}>
                     Submit
                 </button>
-             </Link>}
+             </Link>
   
   
   

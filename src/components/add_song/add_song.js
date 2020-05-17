@@ -4,17 +4,20 @@ import { Link } from 'react-router-dom'
 export const history = createBrowserHistory()
 const AddSong = ({ onSubmit }) => {
     const [name, changeName] = useState('');
-    const [album, changeAlbum] = useState('');
+    const [albumID, changeAlbumID] = useState('');
     const [genre, changeGenre] = useState('');
     
-    const onPress = (name, album, genre) => {
+    const onPress = () => {
 
       console.log("test")
-
+      const generatedId = Math.floor(Math.random() * (999999999 - 9999 + 1) ) + 9999;
+      const generatedTime = Math.floor(Math.random() * (999999 - 100000 + 1) ) + 9999;
+      
+      console.log(generatedId)
       const request = new Request('http://localhost:3001/addSong',{
                 method:'POST',
                 headers: { 'Content-Type':'application/json'},
-                body: JSON.stringify({name:name, album:album, genre:genre})
+                body: JSON.stringify({trackid: generatedId, name:name, albumID:albumID, genre:genre, milliseconds:generatedTime})
             })
 
       fetch(request).then(res => res.json())
@@ -35,9 +38,9 @@ const AddSong = ({ onSubmit }) => {
         />
         <input
           type="text"
-          placeholder="album"
-          value={album}
-          onChange={e => changeAlbum(e.target.value)}
+          placeholder="albumID"
+          value={albumID}
+          onChange={e => changeAlbumID(e.target.value)}
         />
         <input
           type="text"
@@ -46,7 +49,7 @@ const AddSong = ({ onSubmit }) => {
           onChange={e => changeGenre(e.target.value)}
         />
 
-        <button type="submit" className='btn btn-primary' onClick={() => onPress(name, album, genre)}>
+        <button type="submit" className='btn btn-primary' onClick={() => onPress(name, albumID, genre)}>
         add
         </button>
 

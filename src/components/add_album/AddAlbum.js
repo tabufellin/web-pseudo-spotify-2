@@ -11,26 +11,18 @@ const AddAlbum = ({ onSubmit }) => {
 
     const onPress = () => {
 
-      console.log(changeTitle, changeArtist)
+      console.log("test")
+      const generatedId = Math.floor(Math.random() * (999999999 - 9999 + 1) ) + 9999;
 
-      const validateInDataBase = () =>{
+      const request = new Request('http://localhost:3001/addAlbum',{
+                method:'POST',
+                headers: { 'Content-Type':'application/json'},
+                body: JSON.stringify({albumid: generatedId,title:title,artist: artist})
+            })
 
-          //TODO TO SEE THE NAME IS NOT IN THE DATABASE THAT THE ARTIST EXIST
-
-          return true
-      }
-
-      if (validateInDataBase){
-          // TODO TO ADD ALBUM 
-
-
-
-          // AT THE END 
-          history.goBack()
-
-      }
-
-
+      fetch(request).then(res => res.json())
+      .catch(error => console.error('Error:', error))
+      .then(response => console.log('Success:', response));
     } 
 
     return (

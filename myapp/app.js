@@ -1,5 +1,5 @@
 const { uuid } = require('uuidv4');
-const password = "hola mundo"
+const password = "ohdude9912"
 var createError = require('http-errors');
 var express = require('express');
 //////////////////FORM
@@ -94,7 +94,7 @@ app.post('/login',function(request, res){
 });
 
 
-app.post('/addSong',function(request,response){
+app.post('/addSong',function(request,res){
 	const { Client } = require('pg')
 	const connectionData = {
 	  user: 'postgres',
@@ -108,9 +108,11 @@ app.post('/addSong',function(request,response){
 	client.connect()
     const values = Object.values(request.body)
     console.log(values)
-    client.query("INSERT INTO track (name,albumid,genreid) VALUES ($1,$2,$3)",values)
+    client.query("INSERT INTO track (trackid,name,albumid,genreid,milliseconds,mediatypeid,composer,bytes,unitprice) VALUES ($1,$2,$3,$4,$5,1,NULL,NULL,0.99)",values)
     	.then(response => {
-	        res.json(response.rows)
+					res.json(response.rows)
+					console.log('hola')
+
 	        client.end()
 	    })
 	    .catch(err => {
@@ -118,29 +120,81 @@ app.post('/addSong',function(request,response){
 	    })
 	});
 
-app.post('/addArtist',function(request,response){
-	const { Client } = require('pg')
-	const connectionData = {
-	  user: 'postgres',
-	  host: '127.0.0.1',
-	  database: 'Project1db',
-	  password: password,
-	  port: 5432,
-	}
-	const client = new Client(connectionData)
+	app.post('/addArtist',function(request,res){
+		const { Client } = require('pg')
+		const connectionData = {
+			user: 'postgres',
+			host: '127.0.0.1',
+			database: 'Project1db',
+			password: password,
+			port: 5432,
+		}
+		const client = new Client(connectionData)
+	
+		client.connect()
+			const values = Object.values(request.body)
 
-	client.connect()
-    const values = Object.values(request.body)
-    console.log(values)
-    client.query("INSERT INTO artist (artistid,name) VALUES ($1,$2)",values)
-    	.then(response => {
-	        res.json(response.rows)
-	        client.end()
-	    })
-	    .catch(err => {
-	        client.end()
-	    })
-	});
+			client.query("INSERT INTO artist (artistid,name) VALUES ($1,$2)",values)
+				.then(response => {
+						console.log("hola!")
+						res.json(response.rows)
+						client.end()
+				})
+				.catch(err => {
+				console.log(err)
+						client.end()
+				})
+		});
+
+	app.post('/addAlbum',function(request,res){
+		const { Client } = require('pg')
+		const connectionData = {
+			user: 'postgres',
+			host: '127.0.0.1',
+			database: 'Project1db',
+			password: password,
+			port: 5432,
+		}
+		const client = new Client(connectionData)
+	
+		client.connect()
+			const values = Object.values(request.body)
+
+			client.query("INSERT INTO album (albumid,title,artistid) VALUES ($1,$2,$3)",values)
+				.then(response => {
+				console.log("hola!")
+						res.json(response.rows)
+						client.end()
+				})
+				.catch(err => {
+				console.log(err)
+						client.end()
+				})
+		});
+
+// app.post('/addArtist',function(request,response){
+// 	const { Client } = require('pg')
+// 	const connectionData = {
+// 	  user: 'postgres',
+// 	  host: '127.0.0.1',
+// 	  database: 'Project1db',
+// 	  password: password,
+// 	  port: 5432,
+// 	}
+// 	const client = new Client(connectionData)
+
+// 	client.connect()
+//     const values = Object.values(request.body)
+//     console.log(values)
+//     client.query("INSERT INTO artist (artistid,name) VALUES ($1,$2)",values)
+//     	.then(response => {
+// 	        res.json(response.rows)
+// 	        client.end()
+// 	    })
+// 	    .catch(err => {
+// 	        client.end()
+// 	    })
+// 	});
 
 
 
@@ -157,7 +211,8 @@ app.post('/song', function(req, res){
 
 	client.connect()
 	const value = Object.values(req.body)
-	console.log(value)
+	console.log(value[0]+'%')
+	value[0] = value[0]+'%'
 	client.query("SELECT * FROM track WHERE track.name ILIKE $1",value)
 	    .then(response => {
 	        res.json(response.rows)
@@ -181,6 +236,7 @@ app.post('/artist', function(req, res){
 	client.connect()
 	const value = Object.values(req.body)
 	console.log(value)
+	value[0] = value[0]+'%'
 	client.query('SELECT * FROM artist WHERE artist.name ILIKE $1',value)
 	    .then(response => {
 	        res.json(response.rows)
@@ -204,6 +260,7 @@ app.post('/album', function(req, res){
 	client.connect()
 	const value = Object.values(req.body)
 	console.log(value)
+	value[0] = value[0]+'%'
 	client.query('SELECT * FROM album WHERE album.title ILIKE $1',value)
 	    .then(response => {
 	        res.json(response.rows)

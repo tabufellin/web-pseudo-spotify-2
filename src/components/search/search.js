@@ -22,6 +22,7 @@ const Search = ({searching}) => {
             .catch(error => console.error('Error:', error))
             .then(response => {
                 console.log('Success:', response)
+                listSong.length = 0
                 setListSong([...listSong, ...response]) 
             });
 
@@ -40,6 +41,7 @@ const Search = ({searching}) => {
             .catch(error => console.error('Error:', error))
             .then(response => {
                 console.log('Success:', response)
+                listAlbum.length = 0
                 setListAlbum([...listAlbum, ...response]) 
             });
         }
@@ -55,6 +57,7 @@ const Search = ({searching}) => {
             .catch(error => console.error('Error:', error))
             .then(response => {
                 console.log('Success:', response)
+                listArtist.length = 0
                 setListArtist([...listArtist, ...response]) 
             });
         }

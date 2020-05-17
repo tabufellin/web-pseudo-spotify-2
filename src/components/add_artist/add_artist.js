@@ -2,20 +2,20 @@ import React, { useState, Fragment } from 'react'
 import { createBrowserHistory } from 'history'
 import { Link } from 'react-router-dom'
 import './styles.css' 
-import { v4 as uuidv4 } from 'uuid';
 
 export const history = createBrowserHistory()
 const AddArtist = ({ onSubmit }) => {
     const [userName, changeUserName] = useState('');
 
-    const onPress = (name, album, genre) => {
+    const onPress = () => {
 
       console.log("test")
+      const generatedId = Math.floor(Math.random() * (999999999 - 9999 + 1) ) + 9999;
 
       const request = new Request('http://localhost:3001/addArtist',{
                 method:'POST',
                 headers: { 'Content-Type':'application/json'},
-                body: JSON.stringify({artistid: uuidv4(),userName:userName})
+                body: JSON.stringify({artistid: generatedId,userName:userName})
             })
 
       fetch(request).then(res => res.json())
