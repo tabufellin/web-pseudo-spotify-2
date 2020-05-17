@@ -11,16 +11,6 @@ export const history = createBrowserHistory()
 
 const Stadistics = () => {
 
-    const bandera = false
-    const bandera1 = false
-    const bandera2 = false
-    const bandera3 = false
-    const bandera4 = false
-    const bandera5 = false
-    const bandera6 = false
-    const bandera7 = false
-    const bandera8 = false
-
     const [list, setList] = useState([])
     const [list2, setList2] = useState([])
     const [list3, setList3] = useState([])
