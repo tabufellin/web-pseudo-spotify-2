@@ -10,6 +10,7 @@ const User = () => {
     let location = useLocation();
     console.log(location.pathname);
     var pathname = window.location.pathname;
+    console.log("el pahtname es" + pathname)
 
     return (
 

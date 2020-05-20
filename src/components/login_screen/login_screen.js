@@ -39,7 +39,9 @@ const LoginScreen = (props) => {
 
             if (res.length > 0) {
               setUserLogged([...userLogged, ...res])
-              console.log(userName)
+              console.log(res)
+              const usernameid = res[0].userid
+              //console.log(userName)
               const pathLink = '/user/' + userName
               history.push(pathLink)
             } else {
