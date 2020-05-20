@@ -8,9 +8,8 @@ import { useLocation } from 'react-router-dom'
 export const history = createBrowserHistory()
 const User = () => {
     let location = useLocation();
-    console.log(location.pathname);
-    var pathname = window.location.pathname;
-    console.log("el pahtname es" + pathname)
+    const pathname = window.location.pathname;
+    console.log(pathname)
 
     return (
 
