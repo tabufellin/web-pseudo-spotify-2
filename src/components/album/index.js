@@ -1,25 +1,38 @@
 import React, { useState, Fragment } from 'react'
 import UpdateAlbum from '../update_album/index'
+import { Link } from 'react-router-dom'
+const { uuid } = require('uuidv4');
 const Album = (props) => {
 
     const [openEdit, setOpenEdit] = useState([]);
+    const pathname = window.location.pathname;
+    const largoA = pathname.length  - 13
+    const directA = pathname.substr(0, largoA)
 
     const onPressEditar = () => {
 
         console.log(props)
         setOpenEdit([...openEdit, 1])
 
+
     }
 
     const onPressEliminar = () => {
 
-        /*
+        const idBitacora = uuid()
+        const pathname = window.location.pathname;
+        const largo = pathname.length 
+        const userTail = pathname.substr(6, largo )
+        const user = userTail.split("/")[0]
+        console.log(user)
+
+        
         console.log("vamos a eliminar una cancion")
         console.log(props)
         const request = new Request('http://localhost:3001/deleteAlbum',{
             method:'POST', 
             headers: { 'Content-Type':'application/json'},
-            body: JSON.stringify({trackid: props.props.trackid})
+            body: JSON.stringify({albumid: props.props.albumid, idBitacora, user})
           })
           fetch(request).then(res => {
             return res.json()}
@@ -29,7 +42,7 @@ const Album = (props) => {
             console.log('Success:', res)
           }) 
 
-          */
+          
           
 
     }
@@ -54,9 +67,11 @@ const Album = (props) => {
                     Editar
                 </button>
             
+                <Link to={directA}>
                 <button type="submit" onClick={() => onPressEliminar()}>
                     Borrar
-                </button>
+                </button>         
+                </Link>
         
         
                 </div>

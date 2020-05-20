@@ -42,7 +42,7 @@ const LoginScreen = (props) => {
               console.log(res)
               const usernameid = res[0].userid
               //console.log(userName)
-              const pathLink = '/user/' + userName
+              const pathLink = '/user/' + usernameid
               history.push(pathLink)
             } 
           }) 

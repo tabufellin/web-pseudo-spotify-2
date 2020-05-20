@@ -1,7 +1,14 @@
 import React, { useState, Fragment } from 'react'
 import UpdateSong from '../update_song/index'
 import './styles.css'
+import { Link } from 'react-router-dom'
+const { uuid } = require('uuidv4');
+
 const Song = (props) => {
+
+    const pathname = window.location.pathname;
+    const largoA = pathname.length  - 12
+    const directA = pathname.substr(0, largoA)
 
 
     const [openEdit, setOpenEdit] = useState([]);
@@ -17,10 +24,19 @@ const Song = (props) => {
     const onPressEliminar = () => {
         console.log("vamos a eliminar una cancion")
         console.log(props)
+        const idBitacora = uuid()
+        const pathname = window.location.pathname;
+        const largo = pathname.length 
+        const userTail = pathname.substr(6, largo )
+        const user = userTail.split("/")[0]
+        console.log(user)
+        
+    
+
         const request = new Request('http://localhost:3001/deleteSong',{
             method:'POST', 
             headers: { 'Content-Type':'application/json'},
-            body: JSON.stringify({trackid: props.props.trackid})
+            body: JSON.stringify({trackid: props.props.trackid, idBitacora, user})
           })
           fetch(request).then(res => {
             return res.json()}
@@ -29,7 +45,7 @@ const Song = (props) => {
           .then(res => {
             console.log('Success:', res)
           }) 
-          
+         
 
     }
 
@@ -52,10 +68,13 @@ const Song = (props) => {
                 <button type="submit" onClick={() => onPressEditar()}>
                     Editar
                 </button>
-            
+
+                <Link to={directA}>
                 <button type="submit" onClick={() => onPressEliminar()}>
                     Borrar
-                </button>
+                </button>         
+                </Link>
+
         
         
 
