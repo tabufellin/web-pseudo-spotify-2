@@ -1,5 +1,8 @@
+//import doUpdateSong from './updates.js'
+//import Query1 from '../query1/query1'
+const password = "hola mundo"
 const { uuid } = require('uuidv4');
-const password = "ohdude9912"
+
 var createError = require('http-errors');
 var express = require('express');
 //////////////////FORM
@@ -17,6 +20,72 @@ var app = express();
 var urlencodedParser = bodyParser.urlencoded({
 	extended: false
 })
+
+
+const connectionData = {
+	user: 'postgres',
+	host: '127.0.0.1',
+	database: 'Project1db',
+	password: password,
+	port: 5432,
+  }
+const doUpdateSong = (req, res) => {
+const { Client } = require('pg')
+const client = new Client(connectionData)
+client.connect()
+const value = Object.values(req.body)
+console.log(value)
+client.query("UPDATE track SET name = $1, albumid = $2, genreid = $3 WHERE trackid = $4",value)
+	.then(response => {
+		console.log(response)
+		res.json(response.rows)
+		console.log(res)
+		client.end()
+	})
+	.catch(err => {
+		console.log(err)
+		client.end()
+		
+	})
+}
+
+
+
+const doUpdateAlbum = (req, res) => {
+	const { Client } = require('pg')
+	const client = new Client(connectionData)
+	client.connect()
+	const value = Object.values(req.body)
+	console.log(value)
+	client.query("UPDATE album SET title = $1 , artistid = $2 WHERE albumid = $3",value)
+		.then(response => {
+			console.log(response)
+			res.json(response.rows)
+			console.log(res)
+			client.end()
+		})
+		.catch(err => {
+			console.log(err)
+			client.end()
+			
+		})
+	}
+
+const showBitacora  = (req, res) => {
+	const { Client } = require('pg')
+	const client = new Client(connectionData)
+	client.connect()
+	client.query('SELECT * FROM bitacora')
+	    .then(response => {
+	        res.json(response.rows)
+	        client.end()
+	    })
+	    .catch(err => {
+	        client.end()
+	    })
+}
+
+
 
 app.post('/', urlencodedParser, function (req, res) {
 	res.send('welcome, ' + req.body.username)
@@ -83,7 +152,6 @@ app.post('/login',function(request, res){
 	client.query("SELECT * FROM client WHERE client.username = $1 AND client.password = $2 ",values)
 		.then(response => {
 			console.log(response)
-			console.log("ayuda dios")
 			res.json(response.rows)
 			
 			client.end()
@@ -213,8 +281,9 @@ app.post('/song', function(req, res){
 	const value = Object.values(req.body)
 	console.log(value[0]+'%')
 	value[0] = value[0]+'%'
-	client.query("SELECT * FROM track WHERE track.name ILIKE $1",value)
+	client.query("SELECT track.trackid, track.name as name, milliseconds, artist.name as artistname, track.genreid, track.albumid FROM track INNER JOIN album ON track.albumid = album.albumid INNER JOIN artist ON album.artistid = artist.artistid WHERE track.name ILIKE $1;",value)
 	    .then(response => {
+
 	        res.json(response.rows)
 	        client.end()
 	    })
@@ -246,6 +315,7 @@ app.post('/artist', function(req, res){
 	        client.end()
 	    })
 });
+
 app.post('/album', function(req, res){
 	const { Client } = require('pg')
 	const connectionData = {
@@ -436,6 +506,41 @@ app.post('/user/:username', function(req, res){
 	        client.end()
 	    })
  });
+
+ app.post('/deleteSong', function(req, res){
+    const { Client } = require('pg')
+    const connectionData = {
+      user: 'postgres',
+      host: '127.0.0.1',
+      database: 'Project1db',
+      password: password,
+      port: 5432,
+    }
+    const client = new Client(connectionData)
+
+    client.connect()
+    const value = Object.values(req.body)
+	console.log(value)
+    client.query('DELETE FROM track WHERE trackid = $1',value)
+        .then(response => {
+			console.log(response)
+			res.json(response.rows)
+			console.log(res)
+            client.end()
+        })
+        .catch(err => {
+			console.log(err)
+			client.end()
+			
+        })
+});
+
+app.get('/bitacora', showBitacora);
+
+app.post('/updateSong',  doUpdateSong);
+app.post('/updateAlbum', doUpdateAlbum);
+
+
  
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

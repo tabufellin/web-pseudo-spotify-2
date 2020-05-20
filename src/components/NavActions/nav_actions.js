@@ -13,6 +13,7 @@ const NavActions = ({path}) => {
             <nav>
                 <ul>
                     <Link to={`${path}/search/song`}>
+                        
                         <li className="list-group-item list-group-item-primary"> song </li>
                     </Link>
                     <Link to={`${path}/search/album`}>
@@ -52,6 +53,9 @@ const NavActions = ({path}) => {
                     </Link>
                     <Link to={`${path}/stadistics`}>
                         <li> <h2>stadistics</h2> </li>
+                    </Link>
+                    <Link to={`${path}/bitacora`}>
+                        <li> <h2>bitacora</h2> </li>
                     </Link>
                 </ul>
             </nav>

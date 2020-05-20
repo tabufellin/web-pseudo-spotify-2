@@ -6,6 +6,9 @@ import './styles.css'
 export const history = createBrowserHistory()
 const AddArtist = ({ onSubmit }) => {
     const [userName, changeUserName] = useState('');
+    let pathname = window.location.pathname;
+    let largo = pathname.length - 11
+    let gobackPath = pathname.substr(0, largo)
 
     const onPress = () => {
 
@@ -38,10 +41,12 @@ const AddArtist = ({ onSubmit }) => {
           onChange={e => changeUserName(e.target.value)}
         />
 
+
+        <Link to={{pathname: gobackPath} }>
         <button type="submit" className='btn btn-primary' onClick={onPress}>
         add
         </button>
-
+        </Link>
 
       </Fragment>
       

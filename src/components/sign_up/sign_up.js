@@ -20,9 +20,6 @@ const SignUp = ({ onSubmit }) => {
       .catch(error => console.error('Error:', error))
       .then(response => console.log('Success:', response));
 
-
-      console.log("Hola")
-
       if (userName !== '' || password !== '' || userName !== 'admin' || password !== 'password') {
 
         history.goBack()

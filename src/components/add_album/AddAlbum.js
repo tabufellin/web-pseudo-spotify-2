@@ -4,10 +4,12 @@ import { Link } from 'react-router-dom'
 import './styles.css'
 export const history = createBrowserHistory()
 
-
 const AddAlbum = ({ onSubmit }) => {
     const [title, changeTitle] = useState('');
     const [artist, changeArtist] = useState('');
+    let pathname = window.location.pathname;
+    let largo = pathname.length - 10
+    let gobackPath = pathname.substr(0, largo)
 
     const onPress = () => {
 
@@ -44,10 +46,12 @@ const AddAlbum = ({ onSubmit }) => {
           onChange={e => changeArtist(e.target.value)}
         />
 
-
+        <Link to={{pathname: gobackPath} }>
         <button type="submit" className='btn btn-primary' onClick={onPress}>
         add
         </button>
+        </Link>
+
 
 
       </div>
