@@ -18,6 +18,27 @@ var urlencodedParser = bodyParser.urlencoded({
 	extended: false
 })
 
+const connectionData = {
+	user: 'postgres',
+	host: '127.0.0.1',
+	database: 'Project1db',
+	password: password,
+	port: 5432,
+  }
+const showBitacora  = (req, res) => {
+	const { Client } = require('pg')
+	const client = new Client(connectionData)
+	client.connect()
+	client.query('SELECT * FROM bitacora')
+	    .then(response => {
+	        res.json(response.rows)
+	        client.end()
+	    })
+	    .catch(err => {
+	        client.end()
+	    })
+}
+
 app.post('/', urlencodedParser, function (req, res) {
 	res.send('welcome, ' + req.body.username)
   })
@@ -83,7 +104,6 @@ app.post('/login',function(request, res){
 	client.query("SELECT * FROM client WHERE client.username = $1 AND client.password = $2 ",values)
 		.then(response => {
 			console.log(response)
-			console.log("ayuda dios")
 			res.json(response.rows)
 			
 			client.end()
@@ -108,7 +128,7 @@ app.post('/addSong',function(request,res){
 	client.connect()
     const values = Object.values(request.body)
     console.log(values)
-    client.query("INSERT INTO track (trackid,name,albumid,genreid,milliseconds,mediatypeid,composer,bytes,unitprice) VALUES ($1,$2,$3,$4,$5,1,NULL,NULL,0.99)",values)
+    client.query("CALL addSong($1,$2,$3,$4,$5,$6,$7)",values)
     	.then(response => {
 					res.json(response.rows)
 					console.log('hola')
@@ -134,7 +154,7 @@ app.post('/addSong',function(request,res){
 		client.connect()
 			const values = Object.values(request.body)
 
-			client.query("INSERT INTO artist (artistid,name) VALUES ($1,$2)",values)
+			client.query("CALL addArtist($1,$2,$3,$4)",values)
 				.then(response => {
 						console.log("hola!")
 						res.json(response.rows)
@@ -160,7 +180,7 @@ app.post('/addSong',function(request,res){
 		client.connect()
 			const values = Object.values(request.body)
 
-			client.query("INSERT INTO album (albumid,title,artistid) VALUES ($1,$2,$3)",values)
+			client.query("CALL addAlbum($1,$2,$3,$4,$5)",values)
 				.then(response => {
 				console.log("hola!")
 						res.json(response.rows)
@@ -187,7 +207,8 @@ app.post('/song', function(req, res){
 	const value = Object.values(req.body)
 	console.log(value[0]+'%')
 	value[0] = value[0]+'%'
-	client.query("SELECT track.name as name, milliseconds, artist.name as artistid FROM track INNER JOIN album ON track.albumid = album.albumid INNER JOIN artist ON album.artistid = artist.artistid WHERE track.name ILIKE $1",value)
+	client.query("SELECT track.trackid, track.name as name, milliseconds, artist.name as artistname, track.genreid, track.albumid FROM track INNER JOIN album ON track.albumid = album.albumid INNER JOIN artist ON album.artistid = artist.artistid WHERE track.name ILIKE $1;",value)
+
 	    .then(response => {
 	        res.json(response.rows)
 	        client.end()
@@ -259,7 +280,7 @@ app.post('/deleteSong', function(req, res){
 	client.connect()
 	const value = Object.values(req.body)
 	console.log(value)
-	client.query('DELETE FROM track WHERE id = $1',value)
+	client.query('CALL deleteSong($1,$2,$3)',value)
 	    .then(response => {
 	        res.json(response.rows)
 	        client.end()
@@ -435,6 +456,8 @@ app.post('/user/:username', function(req, res){
 	    })
  });
  
+app.get('/bitacora', showBitacora);
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

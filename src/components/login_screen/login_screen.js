@@ -4,11 +4,12 @@ import { Link } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.css';
 import User from '../user/user'
 export const history = createBrowserHistory()
-const LoginScreen = ({ onSubmit, loggedIn }) => {
+const LoginScreen = (props) => {
     const [userName, changeUserName] = useState('');
     const [password, changePassword] = useState('');
     const [userLogged, setUserLogged] = useState('');
-   //const loggedIn = {loggedIn}
+    const loggedIn = props.loggedIn
+    const pathLink = ''
 
 
     const onPressLogin = () => {
@@ -29,22 +30,20 @@ const LoginScreen = ({ onSubmit, loggedIn }) => {
             headers: { 'Content-Type':'application/json'},
             body: JSON.stringify({userName:userName,password:password})
           })
-          console.log("sdjlksdjaflkdsjflkjdslkfjsdlj")
           fetch(request).then(res => {
-            console.log("hola")
             return res.json()}
           )
           .catch(error => console.error('Error:', error))
           .then(res => {
             console.log('Success:', res)
-            console.log("hfsdofjsdklfjlsajflsd")
 
             if (res.length > 0) {
-              console.log("entre aqui")
               setUserLogged([...userLogged, ...res])
               console.log(userName)
-              const path = '/user/' + userName
-              history.push(path)
+              const pathLink = '/user/' + userName
+              history.push(pathLink)
+            } else {
+              const pathLink = '/'
             }
           }) 
           
@@ -69,10 +68,14 @@ const LoginScreen = ({ onSubmit, loggedIn }) => {
       }
 
     }
+    {console.log("el logged in esta en:" + loggedIn)}
+
+    if (loggedIn === true) {
+      return <User />
+    }
 
 
-
-    if (userLogged.length == 0) {
+    if (userLogged.length === 0 ) {
       return (
 
         <div className="form">
@@ -99,8 +102,8 @@ const LoginScreen = ({ onSubmit, loggedIn }) => {
                     aria-label="password" aria-describedby="basic-addon1" 
                     value={password} onChange={e => changePassword(e.target.value)}/>
               </div>
-              <Link to={{pathname: ('/user/' + userName)} }>
-              
+
+              <Link to={{pathname: (pathLink)} }>
                 <button type="submit" className='btn btn-primary' onClick={onPressLogin}>
                     Submit
                 </button>
@@ -121,6 +124,8 @@ const LoginScreen = ({ onSubmit, loggedIn }) => {
    
       );
     }
+
+
 
     return <User />
 

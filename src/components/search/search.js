@@ -1,6 +1,8 @@
 import React, { useState, Fragment } from 'react'
 import { createBrowserHistory } from 'history'
-import { PromiseAdapter } from 'pg-promise'
+import Song from '../song/index'
+import Album from '../album/index'
+import Artist from '../artist/index'
 export const history = createBrowserHistory()
 const Search = ({searching}) => {
     const [listSong, setListSong] = useState([])
@@ -9,7 +11,6 @@ const Search = ({searching}) => {
     const [search, changeSearch] = useState('');
 
    /* const dataBasetoLook = "none"*/
-
     const onClick = (search) => {
 
         if (searching === 'song') {
@@ -76,10 +77,21 @@ const Search = ({searching}) => {
           value={search}
           onChange={e => changeSearch(e.target.value)}
         />
-          <button className="searchButton" onClick={() => onClick(search)}>Buscar</button>
-          <p> {listSong.map((i, index) => <div key={index}> Song {i.name}, Artist {i.composer}, time {i.milliseconds}  </div>)}</p>
-          <p> {listAlbum.map((i, index) => <div key={index}> titulo: {i.title}, albumid {i.albumid}, artistid {i.artistid}  </div>)}</p>
-          <p> {listArtist.map((i, index) => <div key={index}>Nombre: {i.name} id {i.artistid}  </div>)}</p>
+        <button className="searchButton" onClick={() => onClick(search)}>Buscar</button>
+        <div> 
+            {listSong.map((i, index) => (<Song key={index} props={i} />))}
+        </div>
+
+
+        <div>
+            {listAlbum.map((i, index) => ( <Album key={index} props={i} />))}    
+        </div> 
+          
+           {/* <div key={index}> titulo: {i.title}, albumid {i.albumid}, artistid {i.artistid}  </div>))}</p>}*/}
+
+        <div>
+            {listArtist.map((i, index) =>(<Artist key={index} props={i} />) )}
+        </div>
       </Fragment>
       
     );

@@ -6,7 +6,10 @@ const AddSong = ({ onSubmit }) => {
     const [name, changeName] = useState('');
     const [albumID, changeAlbumID] = useState('');
     const [genre, changeGenre] = useState('');
-    
+    let pathname = window.location.pathname;
+    let largo = pathname.length - 9
+    let gobackPath = pathname.substr(0, largo)
+
     const onPress = () => {
 
       console.log("test")
@@ -23,6 +26,7 @@ const AddSong = ({ onSubmit }) => {
       fetch(request).then(res => res.json())
       .catch(error => console.error('Error:', error))
       .then(response => console.log('Success:', response));
+
     } 
 
     return (
@@ -49,10 +53,9 @@ const AddSong = ({ onSubmit }) => {
           onChange={e => changeGenre(e.target.value)}
         />
 
-        <button type="submit" className='btn btn-primary' onClick={() => onPress(name, albumID, genre)}>
-        add
-        </button>
-
+        <Link to={{pathname: gobackPath} }>
+           <button type="submit" className='btn btn-primary' onClick={() => onPress(name, albumID, genre)} > add </button>    
+        </Link>
 
       </Fragment>
       
