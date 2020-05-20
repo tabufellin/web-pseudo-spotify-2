@@ -42,9 +42,7 @@ const LoginScreen = (props) => {
               console.log(userName)
               const pathLink = '/user/' + userName
               history.push(pathLink)
-            } else {
-              const pathLink = '/'
-            }
+            } 
           }) 
           
     
