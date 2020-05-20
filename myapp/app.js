@@ -172,32 +172,6 @@ app.post('/addSong',function(request,res){
 				})
 		});
 
-// app.post('/addArtist',function(request,response){
-// 	const { Client } = require('pg')
-// 	const connectionData = {
-// 	  user: 'postgres',
-// 	  host: '127.0.0.1',
-// 	  database: 'Project1db',
-// 	  password: password,
-// 	  port: 5432,
-// 	}
-// 	const client = new Client(connectionData)
-
-// 	client.connect()
-//     const values = Object.values(request.body)
-//     console.log(values)
-//     client.query("INSERT INTO artist (artistid,name) VALUES ($1,$2)",values)
-//     	.then(response => {
-// 	        res.json(response.rows)
-// 	        client.end()
-// 	    })
-// 	    .catch(err => {
-// 	        client.end()
-// 	    })
-// 	});
-
-
-
 app.post('/song', function(req, res){
 	const { Client } = require('pg')
 	const connectionData = {
@@ -213,7 +187,7 @@ app.post('/song', function(req, res){
 	const value = Object.values(req.body)
 	console.log(value[0]+'%')
 	value[0] = value[0]+'%'
-	client.query("SELECT * FROM track WHERE track.name ILIKE $1",value)
+	client.query("SELECT track.name as name, milliseconds, artist.name as artistid FROM track INNER JOIN album ON track.albumid = album.albumid INNER JOIN artist ON album.artistid = artist.artistid WHERE track.name ILIKE $1",value)
 	    .then(response => {
 	        res.json(response.rows)
 	        client.end()
@@ -262,6 +236,30 @@ app.post('/album', function(req, res){
 	console.log(value)
 	value[0] = value[0]+'%'
 	client.query('SELECT * FROM album WHERE album.title ILIKE $1',value)
+	    .then(response => {
+	        res.json(response.rows)
+	        client.end()
+	    })
+	    .catch(err => {
+	        client.end()
+	    })
+});
+
+app.post('/deleteSong', function(req, res){
+	const { Client } = require('pg')
+	const connectionData = {
+	  user: 'postgres',
+	  host: '127.0.0.1',
+	  database: 'Project1db',
+	  password: password,
+	  port: 5432,
+	}
+	const client = new Client(connectionData)
+
+	client.connect()
+	const value = Object.values(req.body)
+	console.log(value)
+	client.query('DELETE FROM track WHERE id = $1',value)
 	    .then(response => {
 	        res.json(response.rows)
 	        client.end()

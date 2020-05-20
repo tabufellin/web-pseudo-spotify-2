@@ -1,5 +1,6 @@
 import React, { useState, Fragment } from 'react'
 import { createBrowserHistory } from 'history'
+import { PromiseAdapter } from 'pg-promise'
 export const history = createBrowserHistory()
 const Search = ({searching}) => {
     const [listSong, setListSong] = useState([])
@@ -30,7 +31,6 @@ const Search = ({searching}) => {
         }
 
         if (searching === 'album') {
-            console.log("jfdsalfjsad")
             const request = new Request('http://localhost:3001/album',{
                 method:'POST',
                 headers: { 'Content-Type':'application/json'},
@@ -86,3 +86,16 @@ const Search = ({searching}) => {
  } 
 
 export default Search
+
+
+const request = new Request('http://localhost:3001/deleteSong',{
+        method:'POST',
+        headers: { 'Content-Type':'application/json'},
+        body: JSON.stringify({id:props.id})
+    })
+
+    fetch(request).then(res => res.json())
+    .catch(error => console.error('Error:', error))
+    .then(response => {
+        console.log('Success:', response)
+    });
