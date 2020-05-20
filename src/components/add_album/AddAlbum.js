@@ -2,6 +2,9 @@ import React, { useState, Fragment } from 'react'
 import { createBrowserHistory } from 'history'
 import { Link } from 'react-router-dom'
 import './styles.css'
+import { isDOMComponent } from 'react-dom/test-utils'
+const { uuid } = require('uuidv4');
+
 export const history = createBrowserHistory()
 
 const AddAlbum = ({ onSubmit }) => {
@@ -15,11 +18,16 @@ const AddAlbum = ({ onSubmit }) => {
 
       console.log("test")
       const generatedId = Math.floor(Math.random() * (999999999 - 9999 + 1) ) + 9999;
+      const idBitacora = uuid()
+      const pathname = window.location.pathname;
+      const largo = pathname.length 
+      const userTail = pathname.substr(6, largo )
+      const user = userTail.split("/")[0]
 
       const request = new Request('http://localhost:3001/addAlbum',{
                 method:'POST',
                 headers: { 'Content-Type':'application/json'},
-                body: JSON.stringify({albumid: generatedId,title:title,artist: artist})
+                body: JSON.stringify({albumid: generatedId,title:title,artist: artist, idBitacora: idBitacora, user: user})
             })
 
       fetch(request).then(res => res.json())

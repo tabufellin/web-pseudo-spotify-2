@@ -40,11 +40,7 @@ const Album = (props) => {
           .catch(error => console.error('Error:', error))
           .then(res => {
             console.log('Success:', res)
-          }) 
-
-          
-          
-
+          })
     }
 
     const View = (propitos) => {

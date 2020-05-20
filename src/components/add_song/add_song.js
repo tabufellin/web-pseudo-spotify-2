@@ -1,7 +1,10 @@
 import React, { useState, Fragment } from 'react'
 import { createBrowserHistory } from 'history'
 import { Link } from 'react-router-dom'
+const { uuid } = require('uuidv4');
+
 export const history = createBrowserHistory()
+
 const AddSong = ({ onSubmit }) => {
     const [name, changeName] = useState('');
     const [albumID, changeAlbumID] = useState('');
@@ -15,12 +18,17 @@ const AddSong = ({ onSubmit }) => {
       console.log("test")
       const generatedId = Math.floor(Math.random() * (999999999 - 9999 + 1) ) + 9999;
       const generatedTime = Math.floor(Math.random() * (999999 - 100000 + 1) ) + 9999;
-      
+      const idBitacora = uuid()
+      const pathname = window.location.pathname;
+      const largo = pathname.length 
+      const userTail = pathname.substr(6, largo )
+      const user = userTail.split("/")[0]
+
       console.log(generatedId)
       const request = new Request('http://localhost:3001/addSong',{
                 method:'POST',
                 headers: { 'Content-Type':'application/json'},
-                body: JSON.stringify({trackid: generatedId, name:name, albumID:albumID, genre:genre, milliseconds:generatedTime})
+                body: JSON.stringify({trackid: generatedId, name:name, albumID:albumID, genre:genre, milliseconds:generatedTime, idBitacora: idBitacora, user: user})
             })
 
       fetch(request).then(res => res.json())

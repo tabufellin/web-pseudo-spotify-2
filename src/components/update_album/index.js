@@ -2,6 +2,8 @@ import React, { useState, Fragment } from 'react'
 import { createBrowserHistory } from 'history'
 import { Link } from 'react-router-dom'
 import {withRouter} from 'react-router-dom';
+
+const { uuid } = require('uuidv4');
 export const history = createBrowserHistory()
 var pathname = window.location.pathname;
 let saltoA = pathname.substr(0, pathname.length -  12)  + 1
@@ -18,22 +20,30 @@ const UpdateAlbum = (props) => {
     let saltoA = pathname.substr(0, largo)
     
     const onPress = () => {
-        console.log(props)
-      // TODO PARA QUE UPDATE ALBUM
-      //UPDATE album SET title = $1 , artistid = $2 WHERE albumid = $3
-      const request = new Request('http://localhost:3001/UpdateAlbum',{
-        method:'POST',
-        headers: { 'Content-Type':'application/json'},
-        body: JSON.stringify({ title: name, artistid: artistid, albumid: props.props.props.albumid})
-      })
-      fetch(request).then(res => {
-        return res.json()}
-      )
-      .catch(error => console.error('Error:', error))
-      .then(res => {
-        console.log('Success:', res)
-      }) 
-    } 
+
+      const idBitacora = uuid()
+      const pathname = window.location.pathname;
+      const largo = pathname.length 
+      const userTail = pathname.substr(6, largo )
+      const user = userTail.split("/")[0]
+      console.log(user)
+
+      
+      console.log("vamos a editar un album")
+      console.log(props)
+      const request = new Request('http://localhost:3001/updateAlbum',{
+          method:'POST', 
+          headers: { 'Content-Type':'application/json'},
+          body: JSON.stringify({name: name, artistid: artistid, albumid: props.props.props.albumid, idBitacora, user})
+        })
+        fetch(request).then(res => {
+          return res.json()}
+        )
+        .catch(error => console.error('Error:', error))
+        .then(res => {
+          console.log('Success:', res)
+        })
+    }  
 
     return (
 
