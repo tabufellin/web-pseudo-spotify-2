@@ -1,8 +1,5 @@
-//import doUpdateSong from './updates.js'
-//import Query1 from '../query1/query1'
-const password = "hola mundo"
 const { uuid } = require('uuidv4');
-
+const password = "ohdude9912"
 var createError = require('http-errors');
 var express = require('express');
 //////////////////FORM
@@ -21,7 +18,6 @@ var urlencodedParser = bodyParser.urlencoded({
 	extended: false
 })
 
-
 const connectionData = {
 	user: 'postgres',
 	host: '127.0.0.1',
@@ -29,48 +25,6 @@ const connectionData = {
 	password: password,
 	port: 5432,
   }
-const doUpdateSong = (req, res) => {
-const { Client } = require('pg')
-const client = new Client(connectionData)
-client.connect()
-const value = Object.values(req.body)
-console.log(value)
-client.query("UPDATE track SET name = $1, albumid = $2, genreid = $3 WHERE trackid = $4",value)
-	.then(response => {
-		console.log(response)
-		res.json(response.rows)
-		console.log(res)
-		client.end()
-	})
-	.catch(err => {
-		console.log(err)
-		client.end()
-		
-	})
-}
-
-
-
-const doUpdateAlbum = (req, res) => {
-	const { Client } = require('pg')
-	const client = new Client(connectionData)
-	client.connect()
-	const value = Object.values(req.body)
-	console.log(value)
-	client.query("UPDATE album SET title = $1 , artistid = $2 WHERE albumid = $3",value)
-		.then(response => {
-			console.log(response)
-			res.json(response.rows)
-			console.log(res)
-			client.end()
-		})
-		.catch(err => {
-			console.log(err)
-			client.end()
-			
-		})
-	}
-
 const showBitacora  = (req, res) => {
 	const { Client } = require('pg')
 	const client = new Client(connectionData)
@@ -84,8 +38,6 @@ const showBitacora  = (req, res) => {
 	        client.end()
 	    })
 }
-
-
 
 app.post('/', urlencodedParser, function (req, res) {
 	res.send('welcome, ' + req.body.username)
@@ -176,7 +128,7 @@ app.post('/addSong',function(request,res){
 	client.connect()
     const values = Object.values(request.body)
     console.log(values)
-    client.query("INSERT INTO track (trackid,name,albumid,genreid,milliseconds,mediatypeid,composer,bytes,unitprice) VALUES ($1,$2,$3,$4,$5,1,NULL,NULL,0.99)",values)
+    client.query("CALL addSong($1,$2,$3,$4,$5,$6,$7)",values)
     	.then(response => {
 					res.json(response.rows)
 					console.log('hola')
@@ -202,7 +154,7 @@ app.post('/addSong',function(request,res){
 		client.connect()
 			const values = Object.values(request.body)
 
-			client.query("INSERT INTO artist (artistid,name) VALUES ($1,$2)",values)
+			client.query("CALL addArtist($1,$2,$3,$4)",values)
 				.then(response => {
 						console.log("hola!")
 						res.json(response.rows)
@@ -228,7 +180,7 @@ app.post('/addSong',function(request,res){
 		client.connect()
 			const values = Object.values(request.body)
 
-			client.query("INSERT INTO album (albumid,title,artistid) VALUES ($1,$2,$3)",values)
+			client.query("CALL addAlbum($1,$2,$3,$4,$5)",values)
 				.then(response => {
 				console.log("hola!")
 						res.json(response.rows)
@@ -239,32 +191,6 @@ app.post('/addSong',function(request,res){
 						client.end()
 				})
 		});
-
-// app.post('/addArtist',function(request,response){
-// 	const { Client } = require('pg')
-// 	const connectionData = {
-// 	  user: 'postgres',
-// 	  host: '127.0.0.1',
-// 	  database: 'Project1db',
-// 	  password: password,
-// 	  port: 5432,
-// 	}
-// 	const client = new Client(connectionData)
-
-// 	client.connect()
-//     const values = Object.values(request.body)
-//     console.log(values)
-//     client.query("INSERT INTO artist (artistid,name) VALUES ($1,$2)",values)
-//     	.then(response => {
-// 	        res.json(response.rows)
-// 	        client.end()
-// 	    })
-// 	    .catch(err => {
-// 	        client.end()
-// 	    })
-// 	});
-
-
 
 app.post('/song', function(req, res){
 	const { Client } = require('pg')
@@ -282,8 +208,8 @@ app.post('/song', function(req, res){
 	console.log(value[0]+'%')
 	value[0] = value[0]+'%'
 	client.query("SELECT track.trackid, track.name as name, milliseconds, artist.name as artistname, track.genreid, track.albumid FROM track INNER JOIN album ON track.albumid = album.albumid INNER JOIN artist ON album.artistid = artist.artistid WHERE track.name ILIKE $1;",value)
-	    .then(response => {
 
+	    .then(response => {
 	        res.json(response.rows)
 	        client.end()
 	    })
@@ -315,7 +241,6 @@ app.post('/artist', function(req, res){
 	        client.end()
 	    })
 });
-
 app.post('/album', function(req, res){
 	const { Client } = require('pg')
 	const connectionData = {
@@ -332,6 +257,150 @@ app.post('/album', function(req, res){
 	console.log(value)
 	value[0] = value[0]+'%'
 	client.query('SELECT * FROM album WHERE album.title ILIKE $1',value)
+	    .then(response => {
+	        res.json(response.rows)
+	        client.end()
+	    })
+	    .catch(err => {
+	        client.end()
+	    })
+});
+
+app.post('/deleteSong', function(req, res){
+	const { Client } = require('pg')
+	const connectionData = {
+	  user: 'postgres',
+	  host: '127.0.0.1',
+	  database: 'Project1db',
+	  password: password,
+	  port: 5432,
+	}
+	const client = new Client(connectionData)
+
+	client.connect()
+	const value = Object.values(req.body)
+	console.log(value)
+	client.query('CALL deleteSong($1,$2,$3)',value)
+	    .then(response => {
+	        res.json(response.rows)
+	        client.end()
+	    })
+	    .catch(err => {
+	        client.end()
+	    })
+});
+
+app.post('/deleteAlbum', function(req, res){
+	const { Client } = require('pg')
+	const connectionData = {
+	  user: 'postgres',
+	  host: '127.0.0.1',
+	  database: 'Project1db',
+	  password: password,
+	  port: 5432,
+	}
+	const client = new Client(connectionData)
+
+	client.connect()
+	const value = Object.values(req.body)
+	console.log(value)
+	client.query('CALL deleteAlbum($1,$2,$3)',value)
+	    .then(response => {
+	        res.json(response.rows)
+	        client.end()
+	    })
+	    .catch(err => {
+	        client.end()
+	    })
+});
+
+app.post('/deleteArtist', function(req, res){
+	const { Client } = require('pg')
+	const connectionData = {
+	  user: 'postgres',
+	  host: '127.0.0.1',
+	  database: 'Project1db',
+	  password: password,
+	  port: 5432,
+	}
+	const client = new Client(connectionData)
+
+	client.connect()
+	const value = Object.values(req.body)
+	console.log(value)
+	client.query('CALL deleteArtist($1,$2,$3)',value)
+	    .then(response => {
+	        res.json(response.rows)
+	        client.end()
+	    })
+	    .catch(err => {
+	        client.end()
+	    })
+});
+
+app.post('/updateSong', function(req, res){
+	const { Client } = require('pg')
+	const connectionData = {
+	  user: 'postgres',
+	  host: '127.0.0.1',
+	  database: 'Project1db',
+	  password: password,
+	  port: 5432,
+	}
+	const client = new Client(connectionData)
+
+	client.connect()
+	const value = Object.values(req.body)
+	console.log(value)
+	client.query('CALL updateSong($1,$2,$3,$4,$5,$6)',value)
+	    .then(response => {
+	        res.json(response.rows)
+	        client.end()
+	    })
+	    .catch(err => {
+	        client.end()
+	    })
+});
+
+app.post('/updateAlbum', function(req, res){
+	const { Client } = require('pg')
+	const connectionData = {
+	  user: 'postgres',
+	  host: '127.0.0.1',
+	  database: 'Project1db',
+	  password: password,
+	  port: 5432,
+	}
+	const client = new Client(connectionData)
+
+	client.connect()
+	const value = Object.values(req.body)
+	console.log(value)
+	client.query('CALL updateAlbum($1,$2,$3,$4,$5)',value)
+	    .then(response => {
+	        res.json(response.rows)
+	        client.end()
+	    })
+	    .catch(err => {
+	        client.end()
+	    })
+});
+
+app.post('/updateArtist', function(req, res){
+	const { Client } = require('pg')
+	const connectionData = {
+	  user: 'postgres',
+	  host: '127.0.0.1',
+	  database: 'Project1db',
+	  password: password,
+	  port: 5432,
+	}
+	const client = new Client(connectionData)
+
+	client.connect()
+	const value = Object.values(req.body)
+	console.log(value)
+	client.query('CALL updateArtist($1,$2,$3,$4)',value)
 	    .then(response => {
 	        res.json(response.rows)
 	        client.end()
@@ -506,42 +575,9 @@ app.post('/user/:username', function(req, res){
 	        client.end()
 	    })
  });
-
- app.post('/deleteSong', function(req, res){
-    const { Client } = require('pg')
-    const connectionData = {
-      user: 'postgres',
-      host: '127.0.0.1',
-      database: 'Project1db',
-      password: password,
-      port: 5432,
-    }
-    const client = new Client(connectionData)
-
-    client.connect()
-    const value = Object.values(req.body)
-	console.log(value)
-    client.query('DELETE FROM track WHERE trackid = $1',value)
-        .then(response => {
-			console.log(response)
-			res.json(response.rows)
-			console.log(res)
-            client.end()
-        })
-        .catch(err => {
-			console.log(err)
-			client.end()
-			
-        })
-});
-
+ 
 app.get('/bitacora', showBitacora);
 
-app.post('/updateSong',  doUpdateSong);
-app.post('/updateAlbum', doUpdateAlbum);
-
-
- 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
