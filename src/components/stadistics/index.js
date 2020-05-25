@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import './styles.css'
 import React, { useState, Fragment } from 'react'
 import exportCSVFile from '../../functions/csvThings'
+import WatchSalesPerWeekInRange from '../WatchSalesPerWeekInRange';
 export const history = createBrowserHistory()
 
 const Stadistics = () => {
@@ -199,9 +200,8 @@ const Stadistics = () => {
 
     {/*///////////////////////////////////////////////////////////////////*/ }
 
-    <button type="submit"className='btn btn-primary ' onClick={(e) => {
-        
-    }}>
+    <WatchSalesPerWeekInRange />
+
 
 
 
