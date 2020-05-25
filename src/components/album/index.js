@@ -47,13 +47,15 @@ const Album = (props) => {
 
         return(
             <Fragment>
+                {console.log(props)}
                 
     
             <div>
                 <div>
                     <p> {props.props.title}</p>
                     <p> {props.props.albumid} </p>
-                    <p> by {props.props.artistid}</p>
+                    <p> by {props.props.name}</p>
+
                 </div>
         
                 <div>

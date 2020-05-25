@@ -49,6 +49,11 @@ const Song = (props) => {
 
     }
 
+    const onPressComprar = () => {
+
+    }
+
+    
     const View = (propitos) => {
 
         return(
@@ -74,6 +79,12 @@ const Song = (props) => {
                     Borrar
                 </button>         
                 </Link>
+
+                <Link to={directA}>
+                <button type="submit" onClick={() => onPressComprar()}>
+                    Comprar
+                </button>         
+                </Link> 
 
         
         

@@ -1,5 +1,5 @@
 const { uuid } = require('uuidv4');
-const password = "ohdude9912"
+const password = "hola mundo"
 var createError = require('http-errors');
 var express = require('express');
 //////////////////FORM
@@ -25,19 +25,9 @@ const connectionData = {
 	password: password,
 	port: 5432,
   }
-const showBitacora  = (req, res) => {
-	const { Client } = require('pg')
-	const client = new Client(connectionData)
-	client.connect()
-	client.query('SELECT * FROM bitacora')
-	    .then(response => {
-	        res.json(response.rows)
-	        client.end()
-	    })
-	    .catch(err => {
-	        client.end()
-	    })
-}
+
+
+
 
 app.post('/', urlencodedParser, function (req, res) {
 	res.send('welcome, ' + req.body.username)
@@ -58,6 +48,128 @@ app.listen(app.get('port'));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 console.log("Todo listo")
+
+const showBitacora  = (req, res) => {
+	const { Client } = require('pg')
+	const client = new Client(connectionData)
+	client.connect()
+	client.query('SELECT * FROM bitacora')
+	    .then(response => {
+	        res.json(response.rows)
+	        client.end()
+	    })
+	    .catch(err => {
+	        client.end()
+	    })
+}
+
+const showTotalOfSalesPerWeek = (req, res) => {
+	
+	const { Client } = require('pg')
+	const client = new Client(connectionData)
+	client.connect()
+	const values = Object.values(req.body)
+
+	client.query("SELECT date_part('week', invoicedate::date) AS weekly, sum(total) as suma_total, date_trunc('week', invoicedate::date) as dia_lunes_semana FROM (SELECT  * FROM invoice as i JOIN invoiceline as il ON i.invoiceid = il.invoiceid WHERE invoicedate BETWEEN $1 AND $2 ) as fromwheretowhere GROUP BY weekly, dia_lunes_semana ORDER BY weekly desc", values)
+	    .then(response => {
+			res.json(response.rows)
+			console.log("res")
+			console.log(res)
+	        client.end()
+	    })
+	    .catch(err => {
+			console.log(err)
+	        client.end()
+		})
+
+}
+
+const showClientsOfDay = (req, res) => {
+	
+	const { Client } = require('pg')
+	const client = new Client(connectionData)
+	client.connect()
+	const values = Object.values(req.body)
+	const value = [values[0].date]
+	console.log(value)
+
+	client.query('SELECT invoiceid, customerid, total, invoicedate::timestamp::date FROM invoice WHERE  invoicedate = $1', value)
+	    .then(response => {
+			res.json(response.rows)
+			console.log("res")
+			console.log(res)
+	        client.end()
+	    })
+	    .catch(err => {
+			console.log(err)
+	        client.end()
+		})
+
+}
+
+const getRandomOfCertainGenre = (req, res) => {
+	
+	const { Client } = require('pg')
+	const client = new Client(connectionData)
+	client.connect()
+	const values = Object.values(req.body)
+	console.log('si entro aqui wey')
+	console.log(values)
+	client.query('SELECT trackid FROM track WHERE genreid = $1 ORDER BY RANDOM() LIMIT $2', values)
+	    .then(response => {
+			res.json(response.rows)
+			console.log("res")
+			console.log(res)
+	        client.end()
+	    })
+	    .catch(err => {
+			console.log(err)
+	        client.end()
+		})
+
+}
+
+
+const getClients = (req, res) => {
+	const { Client } = require('pg')
+	const client = new Client(connectionData)
+
+	client.connect()
+	client.query('SELECT * FROM client')
+	    .then(response => {
+	        res.json(response.rows)
+	        client.end()
+	    })
+	    .catch(err => {
+	        client.end()
+	    })
+};
+/*
+SELECT * 
+FROM bitacora as b
+JOIN track as t
+ON t.trackid = b.trackid
+WHERE b.action_type_id = 0
+ORDER BY b.created_at DESC 
+LIMIT 10
+*/
+
+
+const getLastGenres = (req, res) => {
+	const { Client } = require('pg')
+	const client = new Client(connectionData)
+
+	client.connect()
+	client.query('SELECT count(*) as cuantas, genreid FROM (SELECT t.genreid FROM bitacora as b JOIN track as t ON t.trackid = b.trackid WHERE b.action_type_id = 0 ORDER BY b.created_at DESC LIMIT 10) as hola GROUP BY genreid' )
+	    .then(response => {
+	        res.json(response.rows)
+	        client.end()
+	    })
+	    .catch(err => {
+			console.log(err)
+	        client.end()
+	    })
+};
 
 app.post('/signup',function(request,response){
 	const { Client } = require('pg')
@@ -256,7 +368,7 @@ app.post('/album', function(req, res){
 	const value = Object.values(req.body)
 	console.log(value)
 	value[0] = value[0]+'%'
-	client.query('SELECT * FROM album WHERE album.title ILIKE $1',value)
+	client.query('SELECT * FROM album JOIN track ON track.albumid = album.albumid WHERE album.title ILIKE $1',value)
 	    .then(response => {
 	        res.json(response.rows)
 	        client.end()
@@ -577,7 +689,11 @@ app.post('/user/:username', function(req, res){
  });
  
 app.get('/bitacora', showBitacora);
-
+app.get('/clients', getClients);
+app.get('/last-genres',getLastGenres )
+app.post('/show-client-of-day', showClientsOfDay);
+app.post('/get-random-of-certain-genre', getRandomOfCertainGenre);
+app.post('/total-sales-per-week', showTotalOfSalesPerWeek);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

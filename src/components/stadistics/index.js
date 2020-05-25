@@ -19,6 +19,7 @@ const Stadistics = () => {
     const [list6, setList6] = useState([])
     const [list7, setList7] = useState([])
     const [list8, setList8] = useState([])
+    const [openTotalSalesWeek, setOpenTotalSalesWeek] = useState([])
 
     const displayDataDB = (link, list, setList) => {
         fetch(link)
@@ -197,6 +198,13 @@ const Stadistics = () => {
     > hola</button>
 
     {/*///////////////////////////////////////////////////////////////////*/ }
+
+    <button type="submit"className='btn btn-primary ' onClick={(e) => {
+        
+    }}>
+
+
+
     </div>
 )
 }
