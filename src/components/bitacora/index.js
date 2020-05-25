@@ -8,7 +8,6 @@ import React, { useState, Fragment } from 'react'
 import exportCSVFile from '../../functions/csvThings'
 export const history = createBrowserHistory()
 
-let bandera = false
 
 const Bitacora = () => {
 
@@ -21,16 +20,13 @@ const Bitacora = () => {
         })
         .then(function(data) {
             console.log(data) 
-           // list.length = 0
+            list.length = 0
             setList([...list, ...data])                    
         });
     }
 
+    displayDataDB('http://localhost:3001/bitacora', list, setList)
 
-    if (!bandera) {
-        displayDataDB('http://localhost:3001/bitacora', list, setList)
-        bandera = true
-    }
 
 
 
@@ -41,7 +37,7 @@ const Bitacora = () => {
         {}
 
 
-    <p>  {list.map((i, index) => <div key={index}> {i.action_type_id} album id {i.albumid} artist id{i.artistid} track id {i.trackid} {i.created_at} {i.id} {i.id_username}  </div>)}   </p>
+    <div>  {list.map((i, index) => <div key={index}> {i.action_type_id} album id {i.albumid} artist id{i.artistid} track id {i.trackid} {i.created_at} {i.id} {i.id_username}  </div>)}   </div>
 
     <button id="1" className="hola"
         onClick={(e) => {

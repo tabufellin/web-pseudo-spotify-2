@@ -425,7 +425,33 @@ app.post('/mySongs', function(req, res){
 	client.connect()
 	const values = Object.values(req.body)
 	console.log(values)
-	client.query("SELECT track.name as trackname, artist.name as artistname, track.milliseconds, track.enlace FROM track INNER JOIN album ON track.albumid = album.albumid INNER JOIN artist ON album.artistid = artist.artistid INNER JOIN bitacora ON track.trackid = bitacora.trackid WHERE bitacora.id_username = $1 AND bitacora.action_type_id = 3",values)
+	client.query("SELECT track.trackid as trackid, track.name as trackname, artist.name as artistname, track.milliseconds, track.enlace FROM track INNER JOIN album ON track.albumid = album.albumid INNER JOIN artist ON album.artistid = artist.artistid INNER JOIN bitacora ON track.trackid = bitacora.trackid WHERE bitacora.id_username = $1 AND bitacora.action_type_id = 3",values)
+
+	    .then(response => {
+	        res.json(response.rows)
+	        client.end()
+	    })
+	    .catch(err => {
+	        client.end()
+	    })
+});
+
+app.post('/playSong', function(req, res){
+	const { Client } = require('pg')
+	const connectionData = {
+	  user: 'postgres',
+	  host: '127.0.0.1',
+	  database: 'Project1db',
+	  password: password,
+	  port: 5432,
+	}
+	const client = new Client(connectionData)
+
+	client.connect()
+	const values = Object.values(req.body)
+	console.log("playing song")
+	console.log(values)
+	client.query("INSERT INTO bitacora(id, id_username, action_type_id, trackid) VALUES($1, $2, 4, $3)",values)
 
 	    .then(response => {
 	        res.json(response.rows)
