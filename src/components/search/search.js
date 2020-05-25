@@ -14,6 +14,7 @@ const Search = ({searching}) => {
     const onClick = (search) => {
 
         if (searching === 'song') {
+            
             const request = new Request('http://localhost:3001/song',{
                 method:'POST',
                 headers: { 'Content-Type':'application/json'},
@@ -27,8 +28,6 @@ const Search = ({searching}) => {
                 listSong.length = 0
                 setListSong([...listSong, ...response]) 
             });
-
-
         }
 
         if (searching === 'album') {

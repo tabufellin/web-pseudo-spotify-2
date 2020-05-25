@@ -9,8 +9,6 @@ const Song = (props) => {
     const pathname = window.location.pathname;
     const largoA = pathname.length  - 12
     const directA = pathname.substr(0, largoA)
-
-
     const [openEdit, setOpenEdit] = useState([]);
 
     const onPressEditar = () => {
@@ -19,7 +17,6 @@ const Song = (props) => {
         setOpenEdit([...openEdit, 1])
         console.log("vamos a editar una cancion")
     }
-
 
     const onPressEliminar = () => {
         console.log("vamos a eliminar una cancion")
@@ -31,8 +28,6 @@ const Song = (props) => {
         const user = userTail.split("/")[0]
         console.log(user)
         
-    
-
         const request = new Request('http://localhost:3001/deleteSong',{
             method:'POST', 
             headers: { 'Content-Type':'application/json'},
@@ -45,8 +40,6 @@ const Song = (props) => {
           .then(res => {
             console.log('Success:', res)
           }) 
-         
-
     }
 
     const onPressAddToCart = () => {
@@ -57,8 +50,6 @@ const Song = (props) => {
         const user = userTail.split("/")[0]
         console.log(user)
         
-    
-
         const request = new Request('http://localhost:3001/addToCart',{
             method:'POST', 
             headers: { 'Content-Type':'application/json'},
@@ -88,10 +79,7 @@ const Song = (props) => {
                     <p> {props.props.milliseconds} </p>
                     <p> price: $0.99 </p>
                 </div>
-        
-
-        
-        
+              
                 <button type="submit" onClick={() => onPressEditar()}>
                     Editar
                 </button>
@@ -104,20 +92,11 @@ const Song = (props) => {
                     Borrar
                 </button>         
                 </Link>
-
-        
-        
-
-        
             </div>
-            
-        
         
             </Fragment>
 
         )
-        
-
     }
 
     if (openEdit.length > 0) {
@@ -127,18 +106,12 @@ const Song = (props) => {
                 {console.log(props)}
                 <UpdateSong name={props.props.name}  albumid={props.props.albumid} genreid={props.props.genreid} trackid={props.props.trackid}/>    
             </Fragment>    
-        )
-
-        
+        )      
     }
 
     return(
         <View propitos={props} />
-        
-
     )
-
-
 
 }
 

@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import './styles.css'
 import React, { useState, Fragment } from 'react'
 import exportCSVFile from '../../functions/csvThings'
+import WatchSalesPerWeekInRange from '../WatchSalesPerWeekInRange';
 export const history = createBrowserHistory()
 
 const Stadistics = () => {
@@ -19,6 +20,7 @@ const Stadistics = () => {
     const [list6, setList6] = useState([])
     const [list7, setList7] = useState([])
     const [list8, setList8] = useState([])
+    const [openTotalSalesWeek, setOpenTotalSalesWeek] = useState([])
 
     const displayDataDB = (link, list, setList) => {
         fetch(link)
@@ -197,6 +199,12 @@ const Stadistics = () => {
     > hola</button>
 
     {/*///////////////////////////////////////////////////////////////////*/ }
+
+    <WatchSalesPerWeekInRange />
+
+
+
+
     </div>
 )
 }
