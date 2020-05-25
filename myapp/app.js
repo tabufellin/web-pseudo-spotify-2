@@ -63,6 +63,54 @@ const showBitacora  = (req, res) => {
 	    })
 }
 
+
+
+
+const genresWithMoreSalesInRange = (req, res) => {
+	
+	const { Client } = require('pg')
+	const client = new Client(connectionData)
+	client.connect()
+	const values = Object.values(req.body)
+	console.log(values)
+
+	client.query("SELECT g.genreid, g.name, sum(i.unitprice) as monto FROM invoiceline as i JOIN invoice as inn ON i.invoiceid = inn.invoiceid JOIN track as t ON  i.trackid = t.trackid JOIN album as a ON  a.albumid = t.albumid JOIN artist as art ON art.artistid = a.artistid JOIN genre as g ON t.genreid = g.genreid WHERE inn.invoicedate BETWEEN $1 AND $2 GROUP BY g.genreid, g.name ORDER BY monto desc", values)
+	    .then(response => {
+			res.json(response.rows)
+			console.log("res")
+			console.log(res)
+	        client.end()
+	    })
+	    .catch(err => {
+			console.log(err)
+	        client.end()
+		})
+
+}
+
+const artistsWithMoreSalesInRange = (req, res) => {
+	console.log('holaaaaa')
+	
+	const { Client } = require('pg')
+	const client = new Client(connectionData)
+	client.connect()
+	const values = Object.values(req.body)
+	console.log(values)
+
+	client.query("SELECT art.artistid, art.name, sum(i.unitprice) as monto FROM invoiceline as i JOIN invoice as inn ON i.invoiceid = inn.invoiceid JOIN track as t ON  i.trackid = t.trackid JOIN album as a ON  a.albumid = t.albumid JOIN artist as art ON art.artistid = a.artistid WHERE inn.invoicedate BETWEEN $1 AND $2 GROUP BY art.artistid, art.name ORDER BY monto desc LIMIT $3", values)
+	    .then(response => {
+			res.json(response.rows)
+			console.log("res")
+			console.log(res)
+	        client.end()
+	    })
+	    .catch(err => {
+			console.log(err)
+	        client.end()
+		})
+
+}
+
 const showTotalOfSalesPerWeek = (req, res) => {
 	
 	const { Client } = require('pg')
@@ -694,6 +742,9 @@ app.get('/last-genres',getLastGenres )
 app.post('/show-client-of-day', showClientsOfDay);
 app.post('/get-random-of-certain-genre', getRandomOfCertainGenre);
 app.post('/total-sales-per-week', showTotalOfSalesPerWeek);
+app.post('/artist-more-sales-in-range', artistsWithMoreSalesInRange);
+app.post('/genres-more-sales-in-range', genresWithMoreSalesInRange);
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
