@@ -1,0 +1,19 @@
+.song {
+    background-color: white;
+    flex-direction: row;
+    display: flex;
+}
+.text {
+   display: flex;
+   align-items: center;
+}
+
+p {
+    padding-right: 3rem;
+    border-color: silver;
+}
+
+button {
+    width: 1%;
+    height: 5%;
+}

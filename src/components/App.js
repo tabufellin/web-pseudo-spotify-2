@@ -3,18 +3,20 @@ import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 import LoginScreen from '../components/login_screen/login_screen'
 import SignUp from './sign_up/sign_up';
 import User from './user/user'
-import Admin from './admin/admin'
 import Search from '../components/search/search'
 import AddArtist from '../components/add_artist/add_artist'
 import AddAlbum from './add_album/AddAlbum'
 import AddSong from './add_song/add_song'
 import Stadistics from './stadistics';
 import Query1 from './query1/query1';
+import Cart from './cart/index';
+import MySongs from './my_songs';
 import Bitacora from './bitacora/index'
 import GenerarReporte from './reportes_ventas_dia/index'
 import { createBrowserHistory } from 'history'
 import GenerarRecomendaciones from './generar_recomendaciones';
 export const history = createBrowserHistory()
+
 let list = []
 
 const App = () => (
@@ -53,6 +55,8 @@ const App = () => (
           <Stadistics list={list}></Stadistics>
         </Route> 
         <Route exact path='/user/:username/bitacora' component={Bitacora} />
+        <Route exact path='/user/:username/cart' component={Cart} />
+        <Route exact path='/user/:username/mysongs' component={MySongs} />
         <Route exact path='/user/:username/generar-reportes' component={GenerarReporte} />
         <Route exact path='/user/:username/generar-recomendaciones' component={GenerarRecomendaciones} />
 

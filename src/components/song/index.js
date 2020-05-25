@@ -9,8 +9,6 @@ const Song = (props) => {
     const pathname = window.location.pathname;
     const largoA = pathname.length  - 12
     const directA = pathname.substr(0, largoA)
-
-
     const [openEdit, setOpenEdit] = useState([]);
 
     const onPressEditar = () => {
@@ -19,7 +17,6 @@ const Song = (props) => {
         setOpenEdit([...openEdit, 1])
         console.log("vamos a editar una cancion")
     }
-
 
     const onPressEliminar = () => {
         console.log("vamos a eliminar una cancion")
@@ -31,8 +28,6 @@ const Song = (props) => {
         const user = userTail.split("/")[0]
         console.log(user)
         
-    
-
         const request = new Request('http://localhost:3001/deleteSong',{
             method:'POST', 
             headers: { 'Content-Type':'application/json'},
@@ -45,15 +40,32 @@ const Song = (props) => {
           .then(res => {
             console.log('Success:', res)
           }) 
+    }
+
+    const onPressAddToCart = () => {
+        console.log(props)
+        const pathname = window.location.pathname;
+        const largo = pathname.length 
+        const userTail = pathname.substr(6, largo )
+        const user = userTail.split("/")[0]
+        console.log(user)
+        
+        const request = new Request('http://localhost:3001/addToCart',{
+            method:'POST', 
+            headers: { 'Content-Type':'application/json'},
+            body: JSON.stringify({cartid: uuid(), user, trackid: props.props.trackid})
+          })
+          fetch(request).then(res => {
+            return res.json()}
+          )
+          .catch(error => console.error('Error:', error))
+          .then(res => {
+            console.log('Success:', res)
+          }) 
          
 
     }
 
-    const onPressComprar = () => {
-
-    }
-
-    
     const View = (propitos) => {
 
         return(
@@ -65,13 +77,14 @@ const Song = (props) => {
                     <p> {props.props.name}</p>
                     <p> by {props.props.artistname}</p>
                     <p> {props.props.milliseconds} </p>
+                    <p> price: $0.99 </p>
                 </div>
-        
-
-        
-        
+              
                 <button type="submit" onClick={() => onPressEditar()}>
                     Editar
+                </button>
+                <button type="submit" onClick={() => onPressAddToCart()}>
+                    Agregar al carrito
                 </button>
 
                 <Link to={directA}>
@@ -79,26 +92,11 @@ const Song = (props) => {
                     Borrar
                 </button>         
                 </Link>
-
-                <Link to={directA}>
-                <button type="submit" onClick={() => onPressComprar()}>
-                    Comprar
-                </button>         
-                </Link> 
-
-        
-        
-
-        
             </div>
-            
-        
         
             </Fragment>
 
         )
-        
-
     }
 
     if (openEdit.length > 0) {
@@ -108,18 +106,12 @@ const Song = (props) => {
                 {console.log(props)}
                 <UpdateSong name={props.props.name}  albumid={props.props.albumid} genreid={props.props.genreid} trackid={props.props.trackid}/>    
             </Fragment>    
-        )
-
-        
+        )      
     }
 
     return(
         <View propitos={props} />
-        
-
     )
-
-
 
 }
 

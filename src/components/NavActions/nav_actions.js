@@ -57,6 +57,12 @@ const NavActions = ({path}) => {
                     <Link to={`${path}/bitacora`}>
                         <li> <h2>bitacora</h2> </li>
                     </Link>
+                    <Link to={`${path}/cart`}>
+                        <li> <h2>cart</h2> </li>
+                    </Link>
+                    <Link to={`${path}/mysongs`}>
+                        <li> <h2>My Songs</h2> </li>
+                    </Link>
                     <Link to={`${path}/generar-reportes`}>
                         <li> <h2>generar reportes</h2> </li>
                     </Link>
