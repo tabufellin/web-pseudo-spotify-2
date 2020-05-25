@@ -49,6 +49,32 @@ const Song = (props) => {
 
     }
 
+    const onPressAddToCart = () => {
+        console.log(props)
+        const pathname = window.location.pathname;
+        const largo = pathname.length 
+        const userTail = pathname.substr(6, largo )
+        const user = userTail.split("/")[0]
+        console.log(user)
+        
+    
+
+        const request = new Request('http://localhost:3001/addToCart',{
+            method:'POST', 
+            headers: { 'Content-Type':'application/json'},
+            body: JSON.stringify({cartid: uuid(), user, trackid: props.props.trackid})
+          })
+          fetch(request).then(res => {
+            return res.json()}
+          )
+          .catch(error => console.error('Error:', error))
+          .then(res => {
+            console.log('Success:', res)
+          }) 
+         
+
+    }
+
     const View = (propitos) => {
 
         return(
@@ -60,6 +86,7 @@ const Song = (props) => {
                     <p> {props.props.name}</p>
                     <p> by {props.props.artistname}</p>
                     <p> {props.props.milliseconds} </p>
+                    <p> price: $0.99 </p>
                 </div>
         
 
@@ -67,6 +94,9 @@ const Song = (props) => {
         
                 <button type="submit" onClick={() => onPressEditar()}>
                     Editar
+                </button>
+                <button type="submit" onClick={() => onPressAddToCart()}>
+                    Agregar al carrito
                 </button>
 
                 <Link to={directA}>

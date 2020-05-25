@@ -117,80 +117,108 @@ app.post('/login',function(request, res){
 app.post('/addSong',function(request,res){
 	const { Client } = require('pg')
 	const connectionData = {
-	  user: 'postgres',
-	  host: '127.0.0.1',
-	  database: 'Project1db',
-	  password: password,
-	  port: 5432,
+		user: 'postgres',
+		host: '127.0.0.1',
+		database: 'Project1db',
+		password: password,
+		port: 5432,
 	}
 	const client = new Client(connectionData)
 
 	client.connect()
-    const values = Object.values(request.body)
-    console.log(values)
-    client.query("CALL addSong($1,$2,$3,$4,$5,$6,$7)",values)
-    	.then(response => {
+		const values = Object.values(request.body)
+		console.log(values)
+		client.query("CALL addSong($1,$2,$3,$4,$5,$6,$7,$8)",values)
+			.then(response => {
 					res.json(response.rows)
 					console.log('hola')
 
-	        client.end()
-	    })
-	    .catch(err => {
-	        client.end()
-	    })
+					client.end()
+			})
+			.catch(err => {
+					client.end()
+			})
 	});
 
-	app.post('/addArtist',function(request,res){
-		const { Client } = require('pg')
-		const connectionData = {
-			user: 'postgres',
-			host: '127.0.0.1',
-			database: 'Project1db',
-			password: password,
-			port: 5432,
-		}
-		const client = new Client(connectionData)
-	
-		client.connect()
-			const values = Object.values(request.body)
+app.post('/addArtist',function(request,res){
+	const { Client } = require('pg')
+	const connectionData = {
+		user: 'postgres',
+		host: '127.0.0.1',
+		database: 'Project1db',
+		password: password,
+		port: 5432,
+	}
+	const client = new Client(connectionData)
 
-			client.query("CALL addArtist($1,$2,$3,$4)",values)
-				.then(response => {
-						console.log("hola!")
-						res.json(response.rows)
-						client.end()
-				})
-				.catch(err => {
-				console.log(err)
-						client.end()
-				})
-		});
+	client.connect()
+		const values = Object.values(request.body)
 
-	app.post('/addAlbum',function(request,res){
-		const { Client } = require('pg')
-		const connectionData = {
-			user: 'postgres',
-			host: '127.0.0.1',
-			database: 'Project1db',
-			password: password,
-			port: 5432,
-		}
-		const client = new Client(connectionData)
-	
-		client.connect()
-			const values = Object.values(request.body)
+		client.query("CALL addArtist($1,$2,$3,$4)",values)
+			.then(response => {
+					console.log("hola!")
+					res.json(response.rows)
+					client.end()
+			})
+			.catch(err => {
+			console.log(err)
+					client.end()
+			})
+	});
 
-			client.query("CALL addAlbum($1,$2,$3,$4,$5)",values)
-				.then(response => {
-				console.log("hola!")
-						res.json(response.rows)
-						client.end()
-				})
-				.catch(err => {
-				console.log(err)
-						client.end()
-				})
-		});
+app.post('/addAlbum',function(request,res){
+	const { Client } = require('pg')
+	const connectionData = {
+		user: 'postgres',
+		host: '127.0.0.1',
+		database: 'Project1db',
+		password: password,
+		port: 5432,
+	}
+	const client = new Client(connectionData)
+
+	client.connect()
+		const values = Object.values(request.body)
+
+		client.query("CALL addAlbum($1,$2,$3,$4,$5)",values)
+			.then(response => {
+			console.log("hola!")
+					res.json(response.rows)
+					client.end()
+			})
+			.catch(err => {
+			console.log(err)
+					client.end()
+			})
+	});
+
+app.post('/addToCart',function(request,res){
+	const { Client } = require('pg')
+	const connectionData = {
+		user: 'postgres',
+		host: '127.0.0.1',
+		database: 'Project1db',
+		password: password,
+		port: 5432,
+	}
+	const client = new Client(connectionData)
+
+	client.connect()
+		const values = Object.values(request.body)
+		console.log(values)
+
+		client.query("INSERT INTO cart(cartid, clientid, trackid) VALUES ($1, $2, $3)",values)
+			.then(response => {
+					res.json(response.rows)
+					client.end()
+			})
+			.catch(err => {
+			console.log(err)
+					client.end()
+			})
+	});
+
+
 
 app.post('/song', function(req, res){
 	const { Client } = require('pg')
@@ -217,6 +245,85 @@ app.post('/song', function(req, res){
 	        client.end()
 	    })
 });
+
+app.post('/cart', function(req, res){
+	const { Client } = require('pg')
+	const connectionData = {
+	  user: 'postgres',
+	  host: '127.0.0.1',
+	  database: 'Project1db',
+	  password: password,
+	  port: 5432,
+	}
+	const client = new Client(connectionData)
+
+	client.connect()
+	const value = Object.values(req.body)
+	console.log(value)
+	client.query("SELECT track.trackid, track.name as name, milliseconds, artist.name as artistname, track.genreid, track.albumid FROM track INNER JOIN album ON track.albumid = album.albumid INNER JOIN artist ON album.artistid = artist.artistid INNER JOIN cart ON track.trackid = cart.trackid WHERE cart.clientid = $1;",value)
+
+	    .then(response => {
+	        res.json(response.rows)
+	        client.end()
+	    })
+	    .catch(err => {
+	        client.end()
+	    })
+});
+
+app.post('/buyCart', function(req, res){
+	const { Client } = require('pg')
+	const connectionData = {
+	  user: 'postgres',
+	  host: '127.0.0.1',
+	  database: 'Project1db',
+	  password: password,
+	  port: 5432,
+	}
+	const client = new Client(connectionData)
+
+	client.connect()
+	const values = Object.values(req.body)
+	console.log('este es el mero mero')
+	console.log(values)
+
+	client.query("CALL buyCart($1, $2, $3, $4, $5, $6, $7, $8, $9)",values)
+
+	    .then(response => {
+	        res.json(response.rows)
+	        client.end()
+	    })
+	    .catch(err => {
+					console.log(err)
+	        client.end()
+	    })
+});
+
+app.post('/mySongs', function(req, res){
+	const { Client } = require('pg')
+	const connectionData = {
+	  user: 'postgres',
+	  host: '127.0.0.1',
+	  database: 'Project1db',
+	  password: password,
+	  port: 5432,
+	}
+	const client = new Client(connectionData)
+
+	client.connect()
+	const values = Object.values(req.body)
+	console.log(values)
+	client.query("SELECT track.name as trackname, artist.name as artistname, track.milliseconds, track.enlace FROM track INNER JOIN album ON track.albumid = album.albumid INNER JOIN artist ON album.artistid = artist.artistid INNER JOIN bitacora ON track.trackid = bitacora.trackid WHERE bitacora.id_username = $1 AND bitacora.action_type_id = 3",values)
+
+	    .then(response => {
+	        res.json(response.rows)
+	        client.end()
+	    })
+	    .catch(err => {
+	        client.end()
+	    })
+});
+
 app.post('/artist', function(req, res){
 	const { Client } = require('pg')
 	const connectionData = {

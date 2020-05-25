@@ -10,8 +10,11 @@ import AddAlbum from './add_album/AddAlbum'
 import AddSong from './add_song/add_song'
 import Stadistics from './stadistics';
 import Query1 from './query1/query1';
-import Bitacora from './bitacora/index'
+import Bitacora from './bitacora/index';
+import Cart from './cart/index';
+
 import { createBrowserHistory } from 'history'
+import MySongs from './my_songs';
 export const history = createBrowserHistory()
 let list = []
 
@@ -51,6 +54,8 @@ const App = () => (
           <Stadistics list={list}></Stadistics>
         </Route> 
         <Route exact path='/user/:username/bitacora' component={Bitacora} />
+        <Route exact path='/user/:username/cart' component={Cart} />
+        <Route exact path='/user/:username/mysongs' component={MySongs} />
 
         <Route exact path='/1' component={Query1} /> 
         
