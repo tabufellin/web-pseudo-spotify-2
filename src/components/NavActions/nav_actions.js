@@ -58,6 +58,9 @@ const NavActions = ({path}) => {
                     <Link to={`${path}/mysongs`}>
                     <button className="btn btn-outline-primary"> My Songs </button>
                     </Link>
+                    <Link to={`${path}/simulate_sales`}>
+                        <li> <h2>Simulate Sales</h2> </li>
+                    </Link>
                     <Link to={`${path}/generar-reportes`}>
                     <button className="btn btn-outline-primary"> Generar Reporte </button>
                     </Link>
