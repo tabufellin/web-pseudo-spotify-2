@@ -1,5 +1,5 @@
 const { uuid } = require('uuidv4');
-const password = "ohdude9912"
+const password = "hola mundo"
 var createError = require('http-errors');
 var express = require('express');
 //////////////////FORM
@@ -61,6 +61,26 @@ const showBitacora  = (req, res) => {
 	    .catch(err => {
 	        client.end()
 	    })
+}
+
+const reproduccionesPorArtista = (req, res) => {
+	const { Client } = require('pg')
+	const client = new Client(connectionData)
+	client.connect()
+	const values = Object.values(req.body)
+	console.log(values)
+
+	client.query("SELECT t.trackid, t.name, count(*) as cuantas_reproducciones FROM bitacora as b JOIN track as t ON b.trackid = t.trackid JOIN album as a ON  t.albumid = a.albumid JOIN artist as art ON a.artistid = art.artistid WHERE b.action_type_id = 4 and art.artistid = $1 GROUP BY t.trackid, t.name ORDER BY cuantas_reproducciones DESC LIMIT $2 ", values)
+	    .then(response => {
+			res.json(response.rows)
+			console.log("res")
+			console.log(res)
+	        client.end()
+	    })
+	    .catch(err => {
+			console.log(err)
+	        client.end()
+		})
 }
 
 
@@ -876,6 +896,7 @@ app.post('/get-random-of-certain-genre', getRandomOfCertainGenre);
 app.post('/total-sales-per-week', showTotalOfSalesPerWeek);
 app.post('/artist-more-sales-in-range', artistsWithMoreSalesInRange);
 app.post('/genres-more-sales-in-range', genresWithMoreSalesInRange);
+app.post('/reproducciones-por-artista', reproduccionesPorArtista)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -13,14 +13,13 @@ const NavActions = ({path}) => {
             <nav>
                 <ul>
                     <Link to={`${path}/search/song`}>
-                        
-                        <li className="list-group-item list-group-item-primary"> song </li>
+                        <button className="btn btn-outline-primary"> song </button>
                     </Link>
                     <Link to={`${path}/search/album`}>
-                        <li className="list-group-item list-group-item-primary"> album </li>
+                     <button className="btn btn-outline-primary"> album </button>
                     </Link>
                     <Link to={`${path}/search/artist`}>
-                        <li className="list-group-item list-group-item-primary"> artist </li>
+                    <button className="btn btn-outline-primary"> artist </button>
                     </Link>
                 </ul>
 
@@ -31,13 +30,13 @@ const NavActions = ({path}) => {
             <nav>
                 <ul>
                     <Link to={`${path}/add/song`}>
-                        <li className="list-group-item list-group-item-primary"> song </li>
+                    <button className="btn btn-outline-primary"> song </button>
                     </Link>
                     <Link to={`${path}/add/album`}>
-                        <li className="list-group-item list-group-item-primary"> album </li>
+                    <button className="btn btn-outline-primary"> album </button>
                     </Link>
                     <Link to={`${path}/add/artist`}>
-                        <li className="list-group-item list-group-item-primary"> artist </li>
+                    <button className="btn btn-outline-primary"> artist </button>
                     </Link>
                 </ul>
             </nav>
@@ -47,27 +46,23 @@ const NavActions = ({path}) => {
             <nav>
                 
                 <ul>
-                    
-                    <Link to={`${path}/users/holi`}>
-                        <li > <h2>users</h2> </li>
-                    </Link>
                     <Link to={`${path}/stadistics`}>
-                        <li> <h2>stadistics</h2> </li>
+                    <button className="btn btn-outline-primary"> stadistics </button>
                     </Link>
                     <Link to={`${path}/bitacora`}>
-                        <li> <h2>bitacora</h2> </li>
+                    <button className="btn btn-outline-primary"> logbook </button>
                     </Link>
                     <Link to={`${path}/cart`}>
-                        <li> <h2>cart</h2> </li>
+                    <button className="btn btn-outline-primary"> cart </button>
                     </Link>
                     <Link to={`${path}/mysongs`}>
-                        <li> <h2>My Songs</h2> </li>
+                    <button className="btn btn-outline-primary"> My Songs </button>
                     </Link>
                     <Link to={`${path}/generar-reportes`}>
-                        <li> <h2>generar reportes</h2> </li>
+                    <button className="btn btn-outline-primary"> Generar Reporte </button>
                     </Link>
                     <Link to={`${path}/generar-recomendaciones`}>
-                        <li> <h2>generar recomendaciones</h2> </li>
+                    <button className="btn btn-outline-primary"> Generar Recomendaciones </button>
                     </Link>
                 </ul>
             </nav>

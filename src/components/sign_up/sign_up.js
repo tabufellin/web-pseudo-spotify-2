@@ -63,7 +63,7 @@ const SignUp = ({ onSubmit }) => {
           onChange={e => changePassword(e.target.value)}
         />
         <Link to={{pathname: '/sign-up'} }>
-          <button type="submit" onClick={() => onPress(userName,password)}>
+          <button type="submit" className='btn btn-primary' onClick={() => onPress(userName,password)}>
             Submit
           </button>
         </Link>

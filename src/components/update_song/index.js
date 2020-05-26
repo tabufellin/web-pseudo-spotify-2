@@ -48,7 +48,7 @@ const UpdateSong = (props) => {
     return (
 
       <Fragment>
-        <h1> Ingreso de canción </h1>
+        <h1> Cambiemos una canción! </h1>
 
         <input
           type="text"

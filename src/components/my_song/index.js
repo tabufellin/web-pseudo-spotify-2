@@ -37,7 +37,7 @@ const MySong = (props) => {
                     <p> by {props.props.artistname}</p>
                     <p> {props.props.milliseconds} </p>
 
-                    <button onClick={() => onClick()}>
+                    <button className='play' onClick={() => onClick()}>
                         Play
                     </button> 
                 </div>

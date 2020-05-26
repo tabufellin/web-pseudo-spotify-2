@@ -1,14 +1,6 @@
-.signUp {
-    margin-top: 50px;
-    
-}
-
-.signUp button {
-    margin-top: 0;
-}
-
-.logIn div {
-
-    margin-bottom: 0;
+.form, .container, .login {
+    background-color: lightblue;
+    margin-top: 10%;
+    padding-bottom: 10%;
 
 }

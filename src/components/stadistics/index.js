@@ -10,6 +10,7 @@ import exportCSVFile from '../../functions/csvThings'
 import WatchSalesPerWeekInRange from '../WatchSalesPerWeekInRange';
 import ArtistWithMoreSaleInRange from '../artist_with_more_sale_in_range/index'
 import GenresWithMoreSalesInRange from '../genres_with_more_sales_in_range/index'
+import TracksMorePlayedArtist from '../tracks-more-played-artist/index'
 export const history = createBrowserHistory()
 
 const Stadistics = () => {
@@ -205,6 +206,8 @@ const Stadistics = () => {
     <WatchSalesPerWeekInRange />
     <ArtistWithMoreSaleInRange />
     <GenresWithMoreSalesInRange />
+    <TracksMorePlayedArtist />
+
     
     
 

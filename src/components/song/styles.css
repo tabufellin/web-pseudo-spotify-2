@@ -9,11 +9,11 @@
 }
 
 p {
-    padding-right: 3rem;
     border-color: silver;
 }
 
-button {
-    width: 1%;
-    height: 5%;
+
+.viewSong {
+    display: flex;
+    flex-direction: row;
 }
