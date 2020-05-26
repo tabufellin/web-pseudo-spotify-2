@@ -12,6 +12,7 @@ import Query1 from './query1/query1';
 import Cart from './cart/index';
 import MySongs from './my_songs';
 import Bitacora from './bitacora/index'
+import SimulateSales from './simulate_sales/index'
 import GenerarReporte from './reportes_ventas_dia/index'
 import { createBrowserHistory } from 'history'
 import GenerarRecomendaciones from './generar_recomendaciones';
@@ -57,6 +58,7 @@ const App = () => (
         <Route exact path='/user/:username/bitacora' component={Bitacora} />
         <Route exact path='/user/:username/cart' component={Cart} />
         <Route exact path='/user/:username/mysongs' component={MySongs} />
+        <Route exact path='/user/:username/simulate_sales' component={SimulateSales} />
         <Route exact path='/user/:username/generar-reportes' component={GenerarReporte} />
         <Route exact path='/user/:username/generar-recomendaciones' component={GenerarRecomendaciones} />
 

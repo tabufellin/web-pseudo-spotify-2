@@ -462,6 +462,33 @@ app.post('/playSong', function(req, res){
 	    })
 });
 
+app.post('/simulateSales', function(req, res){
+	const { Client } = require('pg')
+	const connectionData = {
+	  user: 'postgres',
+	  host: '127.0.0.1',
+	  database: 'Project1db',
+	  password: password,
+	  port: 5432,
+	}
+	const client = new Client(connectionData)
+
+	client.connect()
+	const values = Object.values(req.body)
+	console.log('Este es el simulador de ventas')
+	console.log(values)
+
+	client.query("CALL simulateSales($1,$2,$3,$4,$5)",values)
+
+	    .then(response => {
+	        res.json(response.rows)
+	        client.end()
+	    })
+	    .catch(err => {
+	        client.end()
+	    })
+});
+
 app.post('/artist', function(req, res){
 	const { Client } = require('pg')
 	const connectionData = {
