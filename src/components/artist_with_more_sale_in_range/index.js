@@ -3,19 +3,20 @@ import React, { useState, Fragment } from 'react';
 import {withRouter} from 'react-router-dom'
 import { Link } from 'react-router-dom'
  //NOT DONE
-const WatchSalesPerWeekInRange = ({ onSubmit }) => {
+const ArtistWithMoreSaleInRange = ({ onSubmit }) => {
+    const [cuantosArtistas, changeCuantosArtistas] = useState('')
     const [dateBegin, changeDateBegin]=useState('')
-
     const [dateEnd, changeDateEnd] = useState('')
     const [info, setInfo] = useState([])
 
     const onPressBuscar = () => {
+        console.log(cuantosArtistas, dateBegin, dateEnd)
         const displayDataDB = (link, list, setList) => {
 
             const request = new Request(link ,{
                 method:'POST',
                 headers: { 'Content-Type':'application/json'},
-                body: JSON.stringify({dateBegin: dateBegin, dateEnd: dateEnd})
+                body: JSON.stringify({dateBegin: dateBegin, dateEnd: dateEnd, limit: cuantosArtistas})
             })
 
             fetch(request).then(res => res.json())
@@ -27,15 +28,8 @@ const WatchSalesPerWeekInRange = ({ onSubmit }) => {
             });
 
         }
-     
-     
-      console.log(dateBegin)
-      console.log(dateEnd)
-
-      
-
         console.log('entre aqui') 
-        displayDataDB('http://localhost:3001/total-sales-per-week', info, setInfo)
+        displayDataDB('http://localhost:3001/artist-more-sales-in-range', info, setInfo)
 
     }
 
@@ -48,7 +42,20 @@ const WatchSalesPerWeekInRange = ({ onSubmit }) => {
 
 
         <div class="square">
-            <h1>Ver compras por semana en un rango de tiempo</h1>
+        <h1>Ver artistas con más ventas en un periodo de tiempo</h1>
+
+        <p> ¿De que tamaño quieres tu top?</p>
+        <label>
+        <input
+            type="number"
+            placeholder=""
+            name="tipo"
+            value={cuantosArtistas}
+            onChange={e => changeCuantosArtistas(e.target.value)}
+        />
+            
+        </label>   
+
 
         <p>Ingrese la fecha de inicio </p>
 
@@ -80,7 +87,7 @@ const WatchSalesPerWeekInRange = ({ onSubmit }) => {
             <button type="submit" onClick={() => onPressBuscar({dateBegin})}>
             {'Buscar'}
             </button>
-            <div>{info.map((i, index) => <p key={index}>Semana del: {i.dia_lunes_semana} Total: {i.suma_total} </p>)}</div>
+            <div>{info.map((i, index) => <p key={index}> {index+1}. {i.name} Total: {i.monto} </p>)}</div>
 
    
         </div>
@@ -88,4 +95,4 @@ const WatchSalesPerWeekInRange = ({ onSubmit }) => {
     );
   } 
 
-  export default WatchSalesPerWeekInRange
+  export default ArtistWithMoreSaleInRange
