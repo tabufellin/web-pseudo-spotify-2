@@ -561,6 +561,7 @@ app.post('/artist', function(req, res){
 	        client.end()
 	    })
 });
+
 app.post('/album', function(req, res){
 	const { Client } = require('pg')
 	const connectionData = {
