@@ -1,4 +1,4 @@
-.song {
+.album {
     background-color: white;
     flex-direction: row;
     display: flex;
@@ -13,7 +13,3 @@ p {
     border-color: silver;
 }
 
-.play {
-    width: 1%;
-    height: 5%;
-}

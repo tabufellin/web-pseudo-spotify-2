@@ -76,7 +76,7 @@ const Search = ({searching}) => {
           value={search}
           onChange={e => changeSearch(e.target.value)}
         />
-        <button className="searchButton" onClick={() => onClick(search)}>Buscar</button>
+        <button className="searchButton btn btn-primary " onClick={() => onClick(search)}>Buscar</button>
         <div> 
             {listSong.map((i, index) => (<Song key={index} props={i} />))}
         </div>

@@ -1,5 +1,6 @@
 import React, { useState, Fragment } from 'react'
 import UpdateAlbum from '../update_album/index'
+import './styles.css'
 import { Link } from 'react-router-dom'
 const { uuid } = require('uuidv4');
 const Album = (props) => {

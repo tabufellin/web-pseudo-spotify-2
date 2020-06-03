@@ -72,26 +72,40 @@ const Song = (props) => {
             <Fragment>
                 
     
-            <div className='song'>
-                <div className='text'>
-                    <p> {props.props.name}</p>
-                    <p> by {props.props.artistname}</p>
-                    <p> {props.props.milliseconds} </p>
-                    <p> price: $0.99 </p>
-                </div>
-              
-                <button type="submit" onClick={() => onPressEditar()}>
-                    Editar
-                </button>
-                <button type="submit" onClick={() => onPressAddToCart()}>
-                    Agregar al carrito
-                </button>
+            <div className='song container'>
+                <div className='row viewSong'>
+                    <div className='text col'>
+                        <p> {props.props.name}</p>
+                        <p> by {props.props.artistname}</p>
+                        <p> {props.props.milliseconds} </p>
+                        <p> price: $0.99 </p>
+                    </div>
+                    
+                    <div className='col'>
+                    <button type="submit" className='btn btn-primary ' onClick={() => onPressEditar()}>
+                        Editar
+                    </button>
+                    </div>
+                
+                    <div className='col'>
 
-                <Link to={directA}>
-                <button type="submit" onClick={() => onPressEliminar()}>
-                    Borrar
-                </button>         
-                </Link>
+                    <button type="submit" className='btn btn-primary ' onClick={() => onPressAddToCart()}>
+                        Agregar al carrito
+                    </button>
+
+                    </div>
+
+                    <div className='col'>
+
+                    <Link to={directA}>
+                    <button type="submit" className='btn btn-primary ' onClick={() => onPressEliminar()}>
+                        Borrar
+                    </button>         
+                    </Link>   
+
+                    </div>
+
+                </div>
             </div>
         
             </Fragment>
@@ -102,6 +116,7 @@ const Song = (props) => {
     if (openEdit.length > 0) {
         return(
             <Fragment>
+
                 <View propitos={props} />
                 {console.log(props)}
                 <UpdateSong name={props.props.name}  albumid={props.props.albumid} genreid={props.props.genreid} trackid={props.props.trackid}/>    

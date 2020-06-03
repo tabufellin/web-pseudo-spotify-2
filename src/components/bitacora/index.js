@@ -34,10 +34,37 @@ const Bitacora = () => {
     return (
     <div>
         
-        {}
+        <table class="table">
+        <thead>
+            <tr>
+            <th scope="col">#</th>
+            <th scope="col">action_type_id</th>
+            <th scope="col">albumid</th>
+            <th scope="col">artistid</th>
+            <th scope="col">trackid</th>
+            <th scope="col">created at</th>
+            <th scope="col">id</th>
+            <th scope="col">id_username</th>
+            </tr>
+        </thead>
+        {list.map((i, index) => {
+            return(
+                <tbody>
+                <th scope="row">{index+1}</th>
+                <td> {i.action_type_id}</td>
+                <td> {i.albumid}</td>
+                <td> {i.artistid}</td>
+                <td> {i.trackid} </td>
+                <td> {i.created_at} </td>
+                <td> {i.id} </td>
+                <td> {i.id_username} </td>
+                </tbody>
+            )
 
+        })}
+        
+        </table>
 
-    <div>  {list.map((i, index) => <div key={index}> {i.action_type_id} album id {i.albumid} artist id{i.artistid} track id {i.trackid} {i.created_at} {i.id} {i.id_username}  </div>)}   </div>
 
     <button id="1" className="hola"
         onClick={(e) => {
