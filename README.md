@@ -1,3 +1,9 @@
+Aplicación reproduccion de musica
+Sebastian Gonzalez
+Michael Chan
+Como correr aplicacion:
+
+
 
 -Clonar repositorio
 -Crear base de datos en Mongo llamada "spotify"
