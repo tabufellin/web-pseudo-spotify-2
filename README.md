@@ -1,6 +1,6 @@
 Aplicación reproduccion de musica
-Sebastian Gonzalez
-Michael Chan
+Sebastian Gonzalez y Michael Chan
+
 Como correr aplicacion:
 
 
