@@ -41,7 +41,7 @@ const TracksMorePlayedArtist = ({ onSubmit }) => {
 
 
         <div class="square">
-        <h1>Ver N canciones más vendidas de un artista por su id</h1>
+        <h1>Ver N canciones más reproducidas de un artista por su id</h1>
 
         <p> ¿De que tamaño quieres tu top?</p>
         <label>

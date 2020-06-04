@@ -310,9 +310,8 @@ app.post('/addSong',function(request,res){
 		console.log(values)
 		client.query("CALL addSong($1,$2,$3,$4,$5,$6,$7,$8)",values)
 			.then(response => {
+					console.log(response)
 					res.json(response.rows)
-					console.log('hola')
-
 					client.end()
 			})
 			.catch(err => {
