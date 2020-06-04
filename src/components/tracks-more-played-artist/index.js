@@ -75,7 +75,7 @@ const TracksMorePlayedArtist = ({ onSubmit }) => {
             <button type="submit" onClick={() => onPressBuscar({artistid})}>
             {'Buscar'}
             </button>
-            <div>{info.map((i, index) => <p key={index}> {index+1}. {i.name} Total: {i.monto} </p>)}</div>
+            <div>{info.map((i, index) => <p key={index}> {index+1}. {i.name} Total: {i.cuantas_reproducciones} </p>)}</div>
 
    
         </div>

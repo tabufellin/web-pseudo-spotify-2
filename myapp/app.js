@@ -1,5 +1,5 @@
 const { uuid } = require('uuidv4');
-const password = "hola mundo"
+const password = "ohdude9912"
 var createError = require('http-errors');
 var express = require('express');
 //////////////////FORM
@@ -597,7 +597,7 @@ app.post('/album', function(req, res){
 	const value = Object.values(req.body)
 	console.log(value)
 	value[0] = value[0]+'%'
-	client.query('SELECT * FROM album JOIN track ON track.albumid = album.albumid WHERE album.title ILIKE $1',value)
+	client.query(' SELECT * FROM album JOIN artist ON artist.artistid = album.artistid WHERE album.title ILIKE $1 ',value)
 	    .then(response => {
 	        res.json(response.rows)
 	        client.end()
@@ -657,6 +657,7 @@ app.post('/deleteAlbum', function(req, res){
 
 app.post('/deleteArtist', function(req, res){
 	const { Client } = require('pg')
+	console.log('adios')
 	const connectionData = {
 	  user: 'postgres',
 	  host: '127.0.0.1',
@@ -668,6 +669,7 @@ app.post('/deleteArtist', function(req, res){
 
 	client.connect()
 	const value = Object.values(req.body)
+	console.log('hola')
 	console.log(value)
 	client.query('CALL deleteArtist($1,$2,$3)',value)
 	    .then(response => {

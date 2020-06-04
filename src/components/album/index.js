@@ -28,7 +28,7 @@ const Album = (props) => {
         console.log(user)
 
         
-        console.log("vamos a eliminar una cancion")
+        console.log("vamos a eliminar un album")
         console.log(props)
         const request = new Request('http://localhost:3001/deleteAlbum',{
             method:'POST', 

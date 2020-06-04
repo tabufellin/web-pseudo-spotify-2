@@ -27,7 +27,7 @@ const Artist = (props) => {
         console.log(user)
 
         
-        console.log("vamos a eliminar una cancion")
+        console.log("vamos a eliminar un artista")
         console.log(props)
         const request = new Request('http://localhost:3001/deleteArtist',{
             method:'POST', 
