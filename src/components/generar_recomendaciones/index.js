@@ -109,7 +109,7 @@ const GenerarRecomendaciones = ({ onSubmit }) => {
             console.log('Vamos a crear reporte')
             console.log(genres.genres)
             console.log(clients)
-            for (var i in genres.genres) {
+            for (var i = 0; i < genres.genres.length; i++) {
                 console.log('agregando biiii')
                 const genreid = genres.genres[i].genreid
                 console.log('este es el genre id' + genreid)

@@ -77,8 +77,8 @@ app.post('/generate-recomendations', function(request, response){
 	var dbo = db.db(dbWorking);
 	var myobj = Object.values(request.body)
 	console.log("este es el objeto")
-	console.log(myobj[0][0])
-	values = {clients: myobj[0][0]}
+	console.log(myobj[0])
+	values = {clients: myobj[0]}
 	dbo.collection("recomendaciones").insertOne(values, function(err, res) {
 	  if (err) throw err;
 	  console.log("1 document inserted recomendations");
